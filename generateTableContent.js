@@ -1,8 +1,5 @@
 import { filteredTimetable } from "./prepareData.js";
-<<<<<<< HEAD
 import { fullTimetable } from "./script.js";
-=======
->>>>>>> 64140c02f826b6e2c08f162eeadafbad848150a3
 
 function generateScheduleContent(data) {
   const scheduleDiv = document.getElementById("schedule");

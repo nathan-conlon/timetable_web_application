@@ -58,21 +58,3 @@ async function main() {
 await main();
 // export full timetable
 export { fullTimetable };
-<<<<<<< HEAD
-=======
-
-const getRecipe = async function () {
-  try {
-    const res = await fetch(
-      "https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604691c37cdc054bd00c"
-    );
-    const data = await res.json();
-    if (!res.ok) throw new Error(`${data.message} (${res.status})`);
-    console.log(res, data);
-  } catch (err) {
-    alert(err);
-  }
-};
-
-getRecipe();
->>>>>>> 64140c02f826b6e2c08f162eeadafbad848150a3
