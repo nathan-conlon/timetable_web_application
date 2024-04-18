@@ -1,5 +1,4 @@
 import { filteredTimetable } from "./controller.js";
-import { fullTimetable } from "./model.js";
 import { groups } from "./controller.js";
 import { cblGroups } from "./controller.js";
 import { groupFilter } from "./controller.js";
@@ -119,11 +118,9 @@ export function generateScheduleContent(data) {
 
   // Append table to schedule div
   scheduleDiv.appendChild(table);
-
-  // Populate the dropdown menus
-  populateDropdowns();
 }
 
 export { userGroup };
 export { userCblGroup };
 export { groupFilter };
+export { populateDropdowns };

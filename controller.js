@@ -4,6 +4,7 @@ import { fullTimetable } from "./model.js";
 import { generateScheduleContent } from "./view.js";
 import { userGroup } from "./view.js";
 import { userCblGroup } from "./view.js";
+import { populateDropdowns } from "./view.js";
 // declare user inputs
 
 // declare reference groupings
@@ -162,11 +163,11 @@ const groupFilter = function (userGroup, userCblGroup) {
 };
 groupFilter(userGroup, userCblGroup);
 
-// Call the function with filteredData
+// populate the dropdown menus
+populateDropdowns();
 
 // export timetable (stage 4)
 export { filteredTimetable };
 export { groups };
 export { cblGroups };
 export { groupFilter };
-export { generateScheduleContent };
