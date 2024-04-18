@@ -1,53 +1,35 @@
 import { filteredTimetable } from "./prepareData.js";
-import { fullTimetable } from "./script.js";
+import { fullTimetable } from "./model.js";
+import { groups } from "./prepareData.js";
+import { cblGroups } from "./prepareData.js";
+import { userGroup } from "./prepareData.js";
+import { userCblGroup } from "./prepareData.js";
 
-function generateScheduleContent(data) {
-  const scheduleDiv = document.getElementById("schedule");
+// dynamically add groups to html
 
-  // Clear existing content
-  scheduleDiv.innerHTML = "";
+function populateDropdowns() {
+  const groupSelector = document.getElementById("group-selector");
+  const cblGroupSelector = document.getElementById("cbl-group-selector");
+  // Clear existing options
+  groupSelector.innerHTML = "";
+  cblGroupSelector.innerHTML = "";
 
-  // Create table element
-  const table = document.createElement("table");
-  table.classList.add("schedule-table");
-
-  // Define the keys you want to include in the table
-  const keysToInclude = [
-    "Start Date",
-    "Start Time",
-    "Group",
-    "Location",
-    "Subject",
-    "Description",
-  ];
-
-  // Create table header
-  const tableHeader = document.createElement("thead");
-  const headerRow = document.createElement("tr");
-  keysToInclude.forEach((key) => {
-    const th = document.createElement("th");
-    th.textContent = key;
-    headerRow.appendChild(th);
+  // Add options for groups
+  groups.forEach((group) => {
+    const option = document.createElement("option");
+    option.text = group;
+    option.value = group;
+    groupSelector.appendChild(option);
   });
-  tableHeader.appendChild(headerRow);
-  table.appendChild(tableHeader);
 
-  // Create table body
-  const tableBody = document.createElement("tbody");
-  data.forEach((item) => {
-    const row = document.createElement("tr");
-    keysToInclude.forEach((key) => {
-      const cell = document.createElement("td");
-      cell.textContent = item[key] || ""; // Set cell content to item[key], or empty string if the key doesn't exist
-      row.appendChild(cell);
-    });
-    tableBody.appendChild(row);
+  // Add options for CBL groups
+  cblGroups.forEach((cblGroup) => {
+    const option = document.createElement("option");
+    option.text = cblGroup;
+    option.value = cblGroup;
+    cblGroupSelector.appendChild(option);
   });
-  table.appendChild(tableBody);
-
-  // Append table to schedule div
-  scheduleDiv.appendChild(table);
 }
 
-// Call the function with filteredData
-generateScheduleContent(filteredTimetable);
+// Call the function to populate dropdowns when the page loads
+window.addEventListener("DOMContentLoaded", populateDropdowns());

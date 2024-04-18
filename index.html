@@ -10,11 +10,20 @@
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.3/xlsx.full.min.js"
     ></script>
-    <script type="module" src="script.js"></script>
-    <script type="module" src="prepareData.js"></script>
   </head>
-
   <body>
+    <div>
+      <label for="group-selector">Group:</label>
+      <select id="group-selector">
+        <option value="">Select Group</option>
+      </select>
+
+      <label for="cbl-group-selector">CBL Group:</label>
+      <select id="cbl-group-selector">
+        <option value="">Select CBL Group</option>
+      </select>
+    </div>
+
     <pre id="jsonData"></pre>
     <h2>Course Schedule</h2>
 
@@ -29,6 +38,7 @@
     <div id="schedule">
       <!-- Schedule content will be dynamically inserted here -->
     </div>
+    <script type="module" src="prepareData.js"></script>
     <script type="module" src="generateTableContent.js"></script>
   </body>
 </html>
