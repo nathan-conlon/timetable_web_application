@@ -19,11 +19,24 @@ document
   .getElementById("group-selector")
   .addEventListener("change", function () {
     // Get the selected option
+    var id = this.id;
     var selectedOption = this.value;
 
     // Call the function passing the selected option
     // You can replace the function name "onChangeFunction" with your own function name
-    onChangeFunction(selectedOption);
+    onChangeFunction(selectedOption, id);
+  });
+
+document
+  .getElementById("cbl-group-selector")
+  .addEventListener("change", function () {
+    // Get the selected option
+    var id = this.id;
+    var selectedOption = this.value;
+
+    // Call the function passing the selected option
+    // You can replace the function name "onChangeFunction" with your own function name
+    onChangeFunction(selectedOption, id);
   });
 
 function onLoadFunction() {
@@ -31,12 +44,19 @@ function onLoadFunction() {
 }
 
 // Define the function to be called when the user changes the option
-function onChangeFunction(selectedOption) {
-  userGroup = selectedOption;
-  console.log("User group:", userGroup);
-  groupFilter(userGroup, userCblGroup);
-  console.log(filteredTimetable);
-  generateScheduleContent(filteredTimetable);
+function onChangeFunction(selectedOption, id) {
+  if (id === "group-selector") {
+    userGroup = selectedOption;
+    console.log("User group:", userGroup);
+    groupFilter(userGroup, userCblGroup);
+    generateScheduleContent(filteredTimetable);
+  }
+  if (id === "cbl-group-selector") {
+    userCblGroup = selectedOption;
+    console.log("CBL user group:", userCblGroup);
+    groupFilter(userGroup, userCblGroup);
+    generateScheduleContent(filteredTimetable);
+  }
 }
 
 // declare reference groupings
