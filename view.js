@@ -83,7 +83,7 @@ export default class View {
     scheduleDiv.appendChild(table);
   }
   // Define the function to be called when the user changes the option
-  onChangeFunction(selectedOption, id) {
+  handleGroupChange(selectedOption, id) {
     if (id === "group-selector") {
       userGroup = selectedOption;
       console.log("User group:", userGroup);
@@ -99,7 +99,7 @@ export default class View {
   }
   // add event listeners to dropdown menu
   addEventListeners() {
-    const onChangeFunction = this.onChangeFunction.bind(this);
+    const handleGroupChange = this.handleGroupChange.bind(this);
     document
       .getElementById("group-selector")
       .addEventListener("change", function () {
@@ -108,8 +108,8 @@ export default class View {
         var selectedOption = this.value;
 
         // Call the function passing the selected option
-        // You can replace the function name "onChangeFunction" with your own function name
-        onChangeFunction(selectedOption, id);
+        // You can replace the function name "handleGroupChange" with your own function name
+        handleGroupChange(selectedOption, id);
       });
 
     document
@@ -120,12 +120,11 @@ export default class View {
         var selectedOption = this.value;
 
         // Call the function passing the selected option
-        // You can replace the function name "onChangeFunction" with your own function name
-        onChangeFunction(selectedOption, id);
+        // You can replace the function name "handleGroupChange" with your own function name
+        handleGroupChange(selectedOption, id);
       });
   }
 }
 
 export { userGroup };
 export { userCblGroup };
-export { groupFilter };
