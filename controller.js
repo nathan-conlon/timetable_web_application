@@ -1,10 +1,12 @@
 "user strict";
 // import full timetable (stage 1)
 import { fullTimetable } from "./model.js";
-import { generateScheduleContent } from "./view.js";
 import { userGroup } from "./view.js";
 import { userCblGroup } from "./view.js";
-import { populateDropdowns } from "./view.js";
+import View from "./view.js";
+
+const view = new View();
+
 // declare user inputs
 
 // declare reference groupings
@@ -159,12 +161,12 @@ const groupFilter = function (userGroup, userCblGroup) {
     (entries) =>
       entries.Group.includes(userGroup) || entries.Group.includes(userCblGroup)
   );
-  generateScheduleContent(filteredTimetable);
+  view.renderScheduleContent(filteredTimetable);
 };
 groupFilter(userGroup, userCblGroup);
 
-// populate the dropdown menus
-populateDropdowns();
+// render the dropdown menus
+view.renderDropdowns();
 
 // export timetable (stage 4)
 export { filteredTimetable };
