@@ -90,7 +90,6 @@ function excelTimeToReadable(excelTime) {
 }
 
 // format dates
-
 function excelDateToReadable(excelDate) {
   // Excel stores dates as the number of days since January 0, 1900 (with January 1, 1900, as day 1).
   // But it incorrectly treats 1900 as a leap year, so we need to compensate for that.
