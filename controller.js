@@ -1,13 +1,10 @@
 "user strict";
-// import full timetable (stage 1)
 import { fullTimetable } from "./model.js";
 import { userGroup } from "./view.js";
 import { userCblGroup } from "./view.js";
 import View from "./view.js";
 
 const view = new View();
-
-// declare user inputs
 
 // declare reference groupings
 const groups = [
@@ -72,7 +69,6 @@ const cblGroups = [
 ];
 
 // format times
-
 function excelTimeToReadable(excelTime) {
   // Convert Excel fractional time to milliseconds (24 hours in a day, 60 minutes in an hour, 60 seconds in a minute, 1000 milliseconds in a second)
   var milliseconds = excelTime * 24 * 60 * 60 * 1000;
