@@ -1,7 +1,4 @@
-import { groups } from "./controller.js";
-import { cblGroups } from "./controller.js";
-import { userGroup } from "./controller.js";
-import { userCblGroup } from "./controller.js";
+import { groups, cblGroups, userGroup, userCblGroup } from "./controller.js";
 
 let fullTimetable;
 let formattedTimetable;
@@ -149,5 +146,4 @@ function timetableFilter(formattedTimetable) {
   return filteredTimetable;
 }
 
-export { getFormattedTimetable };
-export { timetableFilter };
+export { getFormattedTimetable, timetableFilter };

@@ -1,9 +1,6 @@
 "user strict";
-import { userGroup } from "./View.js";
-import { userCblGroup } from "./View.js";
-import View from "./View.js";
-import { timetableFilter } from "./model.js";
-import { getFormattedTimetable } from "./model.js";
+import View, { userGroup, userCblGroup } from "./View.js";
+import { timetableFilter, getFormattedTimetable } from "./model.js";
 
 const view = new View();
 
@@ -83,8 +80,4 @@ async function getTableHTML() {
 }
 getTableHTML().then((tableHTML) => view.renderTable(tableHTML));
 
-export { groups };
-export { cblGroups };
-export { userGroup };
-export { userCblGroup };
-export { getTableHTML };
+export { groups, cblGroups, userGroup, userCblGroup, getTableHTML };

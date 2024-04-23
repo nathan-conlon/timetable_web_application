@@ -169,9 +169,6 @@ export default class View {
           ) {
             curEl.textContent = newEl.textContent;
             curEl.style.backgroundColor = "green";
-            console.log("Current element:", curEl);
-            console.log("New element:", newEl);
-            console.log("Index:", i);
           }
 
           // Updates changed ATTRIBUES
@@ -225,5 +222,4 @@ export default class View {
   }
 }
 
-export { userGroup };
-export { userCblGroup };
+export { userGroup, userCblGroup };
