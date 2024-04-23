@@ -1,16 +1,74 @@
-import { filteredTimetable } from "./controller.js";
-import { groups } from "./controller.js";
-import { cblGroups } from "./controller.js";
-import { groupFilter } from "./controller.js";
+import { init } from "./controller.js";
 
 let userGroup = "A01";
 let userCblGroup = "CBL01";
+
+const groups = [
+  "A01",
+  "A02",
+  "A03",
+  "A04",
+  "A05",
+  "A06",
+  "A07",
+  "A08",
+  "A09",
+  "A10",
+  "A11",
+  "A12",
+  "A13",
+  "A14",
+  "A15",
+  "A16",
+  "B01",
+  "B02",
+  "B03",
+  "B04",
+  "B05",
+  "B06",
+  "B07",
+  "B08",
+  "B09",
+  "B10",
+  "B11",
+  "B12",
+  "B13",
+  "B14",
+  "B15",
+  "B16",
+];
+const cblGroups = [
+  "CBL01",
+  "CBL02",
+  "CBL03",
+  "CBL04",
+  "CBL05",
+  "CBL06",
+  "CBL07",
+  "CBL08",
+  "CBL09",
+  "CBL10",
+  "CBL11",
+  "CBL12",
+  "CBL13",
+  "CBL14",
+  "CBL15",
+  "CBL16",
+  "CBL17",
+  "CBL18",
+  "CBL19",
+  "CBL20",
+  "CBL21",
+  "CBL22",
+  "CBL23",
+  "CBL24",
+];
 
 export default class View {
   constructor() {
     this.addEventListeners();
   }
-  // dynamically add groups to html
+  // generate the HTML for the dropdown menus
   renderDropdowns() {
     const groupSelector = document.getElementById("group-selector");
     const cblGroupSelector = document.getElementById("cbl-group-selector");
@@ -34,17 +92,8 @@ export default class View {
       cblGroupSelector.appendChild(option);
     });
   }
-  // render the table
-  renderScheduleContent(data) {
-    const scheduleDiv = document.getElementById("schedule");
-
-    // Clear existing content
-    scheduleDiv.innerHTML = "";
-
-    // Create table element
-    const table = document.createElement("table");
-    table.classList.add("schedule-table");
-
+  // generate the HTML for the schedule table
+  generateTable(data) {
     // Define the keys you want to include in the table
     const keysToInclude = [
       "Start Date",
@@ -55,46 +104,63 @@ export default class View {
       "Description",
     ];
 
-    // Create table header
-    const tableHeader = document.createElement("thead");
-    const headerRow = document.createElement("tr");
-    keysToInclude.forEach((key) => {
-      const th = document.createElement("th");
-      th.textContent = key;
-      headerRow.appendChild(th);
-    });
-    tableHeader.appendChild(headerRow);
-    table.appendChild(tableHeader);
+    // Generate table header HTML
+    const tableHeaderHTML = `
+      <thead>
+        <tr>
+          ${keysToInclude.map((key) => `<th>${key}</th>`).join("")}
+        </tr>
+      </thead>
+    `;
 
-    // Create table body
-    const tableBody = document.createElement("tbody");
-    data.forEach((item) => {
-      const row = document.createElement("tr");
-      keysToInclude.forEach((key) => {
-        const cell = document.createElement("td");
-        cell.textContent = item[key] || ""; // Set cell content to item[key], or empty string if the key doesn't exist
-        row.appendChild(cell);
-      });
-      tableBody.appendChild(row);
-    });
-    table.appendChild(tableBody);
+    // Generate table body HTML
+    const tableBodyHTML = `
+      <tbody>
+        ${data
+          .map(
+            (item) => `
+          <tr>
+            ${keysToInclude
+              .map((key) => `<td>${item[key] || ""}</td>`)
+              .join("")}
+          </tr>
+        `
+          )
+          .join("")}
+      </tbody>
+    `;
 
-    // Append table to schedule div
-    scheduleDiv.appendChild(table);
+    // Generate complete table HTML
+    const tableHTML = `
+      <table class="schedule-table">
+        ${tableHeaderHTML}
+        ${tableBodyHTML}
+      </table>
+    `;
+
+    return tableHTML;
   }
-  // Define the function to be called when the user changes the option
+  // append the table to the DOM
+  renderTable(markup) {
+    const scheduleDiv = document.getElementById("schedule");
+
+    // Clear existing content
+    scheduleDiv.innerHTML = "";
+
+    // Append markup to schedule div
+    scheduleDiv.innerHTML = markup;
+  }
+  // User changes the group
   handleGroupChange(selectedOption, id) {
     if (id === "group-selector") {
       userGroup = selectedOption;
       console.log("User group:", userGroup);
-      groupFilter(userGroup, userCblGroup);
-      this.renderScheduleContent(filteredTimetable);
+      init();
     }
     if (id === "cbl-group-selector") {
       userCblGroup = selectedOption;
       console.log("CBL user group:", userCblGroup);
-      groupFilter(userGroup, userCblGroup);
-      this.renderScheduleContent(filteredTimetable);
+      init();
     }
   }
   // add event listeners to dropdown menu

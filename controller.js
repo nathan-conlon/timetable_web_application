@@ -1,8 +1,9 @@
 "user strict";
-import { fullTimetable } from "./model.js";
-import { userGroup } from "./view.js";
-import { userCblGroup } from "./view.js";
-import View from "./view.js";
+import { userGroup } from "./View.js";
+import { userCblGroup } from "./View.js";
+import View from "./View.js";
+import { timetableFilter } from "./model.js";
+import { getFormattedTimetable } from "./model.js";
 
 const view = new View();
 
@@ -68,103 +69,23 @@ const cblGroups = [
   "CBL24",
 ];
 
-// format times
-function excelTimeToReadable(excelTime) {
-  // Convert Excel fractional time to milliseconds (24 hours in a day, 60 minutes in an hour, 60 seconds in a minute, 1000 milliseconds in a second)
-  var milliseconds = excelTime * 24 * 60 * 60 * 1000;
+// INIT - WORKING CORRECTLY
 
-  // Create a new Date object with the milliseconds
-  var date = new Date(milliseconds);
-
-  // Extract hours and minutes
-  var hours = date.getUTCHours();
-  var minutes = date.getUTCMinutes();
-
-  // Format the time
-  var formattedTime =
-    hours.toString().padStart(2, "0") +
-    ":" +
-    minutes.toString().padStart(2, "0");
-
-  return formattedTime;
+async function init() {
+  // Render dropdownds
+  view.renderDropdowns();
+  // Get formatted timetable
+  const formattedTimetable = await getFormattedTimetable();
+  // Filter the timetable
+  const filteredTimetable = timetableFilter(formattedTimetable);
+  // Render the timetable
+  const markup = view.generateTable(filteredTimetable);
+  view.renderTable(markup);
 }
+init();
 
-// format dates
-function excelDateToReadable(excelDate) {
-  // Excel stores dates as the number of days since January 0, 1900 (with January 1, 1900, as day 1).
-  // But it incorrectly treats 1900 as a leap year, so we need to compensate for that.
-  var msPerDay = 24 * 60 * 60 * 1000; // milliseconds in a day
-  var excelEpoch = new Date(Date.UTC(1900, 0, 1));
-  var epochAsUnixTimestamp = excelEpoch.getTime();
-  var msSinceExcelEpoch = (excelDate - 1) * msPerDay; // Subtract 1 to account for Excel's base date being January 0, 1900
-
-  var utcTimeStamp = epochAsUnixTimestamp + msSinceExcelEpoch;
-
-  // Create a new Date object with the calculated timestamp
-  var date = new Date(utcTimeStamp);
-
-  // Extract year, month, and day
-  var year = date.getUTCFullYear();
-  var month = (date.getUTCMonth() + 1).toString().padStart(2, "0"); // Month is 0-indexed, so add 1
-  var day = date.getUTCDate().toString().padStart(2, "0");
-
-  // Format the date
-  var formattedDate = day + "/" + month + "/" + year;
-
-  return formattedDate;
-}
-
-// format timetable (stage 2)
-let formattedTimetable = fullTimetable.map((entry) => {
-  // Remove whitespace from keys
-  Object.keys(entry).forEach((key) => {
-    const trimmedKey = key.trim();
-    if (key !== trimmedKey) {
-      entry[trimmedKey] = entry[key];
-      delete entry[key];
-    }
-  });
-
-  // Split the groups into string iterations
-  let string = entry.Group.split("-");
-  // Remove whitespace from string iterations
-  string = string.map((str) => str.trim());
-  // Turn entry.groups into an empty array
-  entry.Group = [];
-
-  // Define the reference groups based on the condition
-  const referenceGroups = string[0][0] !== "C" ? groups : cblGroups;
-
-  // Loop through reference groups and fill the emptied groups array
-  entry.Group = referenceGroups.slice(
-    referenceGroups.indexOf(string[0]),
-    referenceGroups.indexOf(string[1]) + 1
-  );
-
-  // convert timestamps
-  entry["Start Date"] = excelDateToReadable(entry["Start Date"]);
-  entry["Start Time"] = excelTimeToReadable(entry["Start Time"]);
-  entry["End Time"] = excelTimeToReadable(entry["End Time"]);
-
-  return entry; // Return the modified entry
-});
-
-// filter the timetable (stage 3)
-let filteredTimetable;
-const groupFilter = function (userGroup, userCblGroup) {
-  filteredTimetable = formattedTimetable.filter(
-    (entries) =>
-      entries.Group.includes(userGroup) || entries.Group.includes(userCblGroup)
-  );
-  view.renderScheduleContent(filteredTimetable);
-};
-groupFilter(userGroup, userCblGroup);
-
-// render the dropdown menus
-view.renderDropdowns();
-
-// export timetable (stage 4)
-export { filteredTimetable };
 export { groups };
 export { cblGroups };
-export { groupFilter };
+export { userGroup };
+export { userCblGroup };
+export { init };
