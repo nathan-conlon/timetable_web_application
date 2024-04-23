@@ -1,4 +1,4 @@
-import { init } from "./controller.js";
+import { getTableHTML } from "./controller.js";
 
 let userGroup = "A01";
 let userCblGroup = "CBL01";
@@ -65,8 +65,10 @@ const cblGroups = [
 ];
 
 export default class View {
+  parentElement = document.getElementById("schedule");
   constructor() {
     this.addEventListeners();
+    this.renderDropdowns();
   }
   // generate the HTML for the dropdown menus
   renderDropdowns() {
@@ -142,25 +144,56 @@ export default class View {
   }
   // append the table to the DOM
   renderTable(markup) {
-    const scheduleDiv = document.getElementById("schedule");
-
     // Clear existing content
-    scheduleDiv.innerHTML = "";
-
+    this.parentElement.innerHTML = "";
     // Append markup to schedule div
-    scheduleDiv.innerHTML = markup;
+    this.parentElement.innerHTML = markup;
   }
-  // User changes the group
+  updateTable() {
+    getTableHTML()
+      .then((result) => {
+        const newMarkup = result;
+        const newDOM = document
+          .createRange()
+          .createContextualFragment(newMarkup);
+        const newElements = Array.from(newDOM.querySelectorAll("*"));
+        const curElements = Array.from(
+          this.parentElement.querySelectorAll("*")
+        );
+        newElements.forEach((newEl, i) => {
+          const curEl = curElements[i];
+          // Updates changed TEXT
+          if (
+            !newEl.isEqualNode(curEl) &&
+            newEl.firstChild?.nodeValue.trim() !== ""
+          ) {
+            curEl.textContent = newEl.textContent;
+            curEl.style.backgroundColor = "green";
+            console.log("Current element:", curEl);
+            console.log("New element:", newEl);
+            console.log("Index:", i);
+          }
+
+          // Updates changed ATTRIBUES
+          if (!newEl.isEqualNode(curEl))
+            Array.from(newEl.attributes).forEach((attr) =>
+              curEl.setAttribute(attr.name, attr.value)
+            );
+        });
+      })
+      .catch((error) => {
+        console.error("Error while getting table HTML:", error);
+      });
+  }
+  // function to handle group changes
   handleGroupChange(selectedOption, id) {
     if (id === "group-selector") {
       userGroup = selectedOption;
-      console.log("User group:", userGroup);
-      init();
+      this.updateTable();
     }
     if (id === "cbl-group-selector") {
       userCblGroup = selectedOption;
-      console.log("CBL user group:", userCblGroup);
-      init();
+      this.updateTable();
     }
   }
   // add event listeners to dropdown menu

@@ -71,21 +71,20 @@ const cblGroups = [
 
 // INIT - WORKING CORRECTLY
 
-async function init() {
-  // Render dropdownds
-  view.renderDropdowns();
+async function getTableHTML() {
   // Get formatted timetable
   const formattedTimetable = await getFormattedTimetable();
   // Filter the timetable
   const filteredTimetable = timetableFilter(formattedTimetable);
-  // Render the timetable
-  const markup = view.generateTable(filteredTimetable);
-  view.renderTable(markup);
+  // Generate the timetable HTML
+  const tableHTML = view.generateTable(filteredTimetable);
+  // Append the HTML to the DOM
+  return tableHTML;
 }
-init();
+getTableHTML().then((tableHTML) => view.renderTable(tableHTML));
 
 export { groups };
 export { cblGroups };
 export { userGroup };
 export { userCblGroup };
-export { init };
+export { getTableHTML };
