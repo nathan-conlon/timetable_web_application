@@ -175,17 +175,9 @@ function getDatesArray(startYear, endYear) {
 // Get current date
 function getCurrentDate() {
   var currentDate = new Date();
-  var day = currentDate.getDate();
-  var month = currentDate.getMonth() + 1; // Months are zero-indexed
-  var year = String(currentDate.getFullYear()).slice(2); // Get last two digits of the year
-
-  // Add leading zeros if necessary
-  if (day < 10) {
-    day = "0" + day;
-  }
-  if (month < 10) {
-    month = "0" + month;
-  }
+  var year = String(currentDate.getFullYear()).slice(-2); // Extract last two digits of the year
+  var month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
+  var day = String(currentDate.getDate()).padStart(2, "0");
 
   return `${day}/${month}/${year}`;
 }
@@ -193,9 +185,29 @@ function getCurrentDate() {
 // Match the current date to the dates index
 function findDateIndex() {
   dates.forEach((date, i) => {
-    if (date === currentDate) currentDateIndex = i;
+    if (date === currentDate) {
+      currentDateIndex = i;
+    }
   });
 }
 findDateIndex();
 
-export { getFormattedTimetable, timetableFilter };
+function formatDate(date) {
+  // Format the date as "DD/MM/YY"
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = String(date.getFullYear()).slice(2);
+  return `${day}/${month}/${year}`;
+}
+
+// Previous and next date functions
+
+// Set the default date to today
+document.getElementById("date-selector").value = currentDate;
+
+export {
+  getFormattedTimetable,
+  timetableFilter,
+  findDateIndex,
+  currentDateIndex,
+};

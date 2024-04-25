@@ -1,4 +1,4 @@
-import { getTableHTML } from "./controller.js";
+import { getTableHTML, currentDateIndex } from "./controller.js";
 
 let userGroup = "A01";
 let userCblGroup = "CBL01";
@@ -219,6 +219,21 @@ export default class View {
         // You can replace the function name "handleGroupChange" with your own function name
         handleGroupChange(selectedOption, id);
       });
+    document.getElementById("previous").addEventListener("click", function () {
+      if (currentDateIndex > 0) {
+        currentDateIndex--;
+        document.getElementById("date-selector").value =
+          dates[currentDateIndex];
+      }
+    });
+    document.getElementById("next").addEventListener("click", function () {
+      if (currentDateIndex > 0) {
+        currentDateIndex++;
+        console.log(currentDateIndex);
+        document.getElementById("date-selector").value =
+          dates[currentDateIndex];
+      }
+    });
   }
 }
 
