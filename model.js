@@ -2,6 +2,9 @@ import { groups, cblGroups, userGroup, userCblGroup } from "./controller.js";
 
 let fullTimetable;
 let formattedTimetable;
+let dates = getDatesArray(2023, 2024);
+let currentDate = getCurrentDate();
+let currentDateIndex;
 
 // Function to fetch data from a file path
 async function fetchData(filePath) {
@@ -145,5 +148,54 @@ function timetableFilter(formattedTimetable) {
   );
   return filteredTimetable;
 }
+
+// Generate an array of dates in the calendar year
+function getDatesArray(startYear, endYear) {
+  var startDate = new Date(startYear, 8, 1); // September is month 8 (0-indexed)
+  var endDate = new Date(endYear, 4, 1); // May is month 4 (0-indexed)
+  var datesArray = [];
+
+  while (startDate < endDate) {
+    var day = startDate.getDate();
+    var month = startDate.getMonth() + 1;
+    var year = String(startDate.getFullYear()).slice(2);
+
+    // Add leading zeros if needed
+    var formattedDay = day < 10 ? "0" + day : day;
+    var formattedMonth = month < 10 ? "0" + month : month;
+
+    var formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
+    datesArray.push(formattedDate);
+    startDate.setDate(startDate.getDate() + 1);
+  }
+
+  return datesArray;
+}
+
+// Get current date
+function getCurrentDate() {
+  var currentDate = new Date();
+  var day = currentDate.getDate();
+  var month = currentDate.getMonth() + 1; // Months are zero-indexed
+  var year = String(currentDate.getFullYear()).slice(2); // Get last two digits of the year
+
+  // Add leading zeros if necessary
+  if (day < 10) {
+    day = "0" + day;
+  }
+  if (month < 10) {
+    month = "0" + month;
+  }
+
+  return `${day}/${month}/${year}`;
+}
+
+// Match the current date to the dates index
+function findDateIndex() {
+  dates.forEach((date, i) => {
+    if (date === currentDate) currentDateIndex = i;
+  });
+}
+findDateIndex();
 
 export { getFormattedTimetable, timetableFilter };
