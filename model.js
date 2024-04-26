@@ -152,11 +152,13 @@ function timetableFilter(data) {
   return filteredTimetable;
 }
 
+// DATE FILTER NEEDS WORK
+
 function dateFilter(data) {
-  let dateFilteredTimetable = data.filter((entries) =>
-    entries["Start Date"].includes(dateInfo["viewDate"])
+  let filteredTimetable = data.filter((entries) =>
+    entries["Start Date"].includes(dateInfo.viewDate)
   );
-  return dateFilteredTimetable;
+  return filteredTimetable;
 }
 
 // Generate an array of dates in the calendar year

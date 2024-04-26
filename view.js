@@ -176,7 +176,6 @@ export default class View {
             newEl.firstChild?.nodeValue.trim() !== ""
           ) {
             curEl.textContent = newEl.textContent;
-            curEl.style.backgroundColor = "green";
           }
 
           // Updates changed ATTRIBUES
