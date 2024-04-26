@@ -1,4 +1,10 @@
-import { groups, cblGroups, userGroup, userCblGroup } from "./controller.js";
+import {
+  groups,
+  cblGroups,
+  userGroup,
+  userCblGroup,
+  dateInfo,
+} from "./controller.js";
 
 let fullTimetable;
 let formattedTimetable;
@@ -77,7 +83,7 @@ function excelDateToReadable(excelDate) {
   var date = new Date(utcTimeStamp);
 
   // Extract year, month, and day
-  var year = date.getUTCFullYear();
+  var year = date.getUTCFullYear().toString().substr(-2);
   var month = (date.getUTCMonth() + 1).toString().padStart(2, "0"); // Month is 0-indexed, so add 1
   var day = date.getUTCDate().toString().padStart(2, "0");
 
@@ -138,12 +144,19 @@ async function getFormattedTimetable() {
 }
 
 // filter function
-function timetableFilter(formattedTimetable) {
-  let filteredTimetable = formattedTimetable.filter(
+function timetableFilter(data) {
+  let filteredTimetable = data.filter(
     (entries) =>
       entries.Group.includes(userGroup) || entries.Group.includes(userCblGroup)
   );
   return filteredTimetable;
+}
+
+function dateFilter(data) {
+  let dateFilteredTimetable = data.filter((entries) =>
+    entries["Start Date"].includes(dateInfo["viewDate"])
+  );
+  return dateFilteredTimetable;
 }
 
 // Generate an array of dates in the calendar year
@@ -203,4 +216,4 @@ function getDateInfo() {
   return dateInfo;
 }
 
-export { getFormattedTimetable, timetableFilter, getDateInfo };
+export { getFormattedTimetable, timetableFilter, dateFilter, getDateInfo };

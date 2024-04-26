@@ -227,11 +227,13 @@ export default class View {
         // You can replace the function name "handleGroupChange" with your own function name
         handleGroupChange(selectedOption, id);
       });
-    document.getElementById("previous").addEventListener("click", function () {
+    document.getElementById("previous").addEventListener("click", () => {
       changeDate("previous");
+      this.updateTable(); // Use `this.updateTable()` here
     });
-    document.getElementById("next").addEventListener("click", function () {
+    document.getElementById("next").addEventListener("click", () => {
       changeDate("next");
+      this.updateTable(); // Use `this.updateTable()` here
     });
   }
 }

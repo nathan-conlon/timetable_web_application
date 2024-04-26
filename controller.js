@@ -1,6 +1,7 @@
 "user strict";
 import View, { userGroup, userCblGroup } from "./View.js";
 import {
+  dateFilter,
   timetableFilter,
   getFormattedTimetable,
   getDateInfo,
@@ -71,15 +72,15 @@ const cblGroups = [
   "CBL24",
 ];
 
-// INIT - WORKING CORRECTLY
-
 async function getTableHTML() {
   // Get formatted timetable
   const formattedTimetable = await getFormattedTimetable();
   // Filter the timetable
   const filteredTimetable = timetableFilter(formattedTimetable);
+  // Apply date filter
+  const dateFilteredTimetable = dateFilter(filteredTimetable);
   // Generate the timetable HTML
-  const tableHTML = view.generateTable(filteredTimetable);
+  const tableHTML = view.generateTable(dateFilteredTimetable);
   // Append the HTML to the DOM
   return tableHTML;
 }
