@@ -1,4 +1,4 @@
-import { getTableHTML, currentDateIndex } from "./controller.js";
+import { getTableHTML, changeDate } from "./controller.js";
 
 let userGroup = "A01";
 let userCblGroup = "CBL01";
@@ -70,6 +70,14 @@ export default class View {
     this.addEventListeners();
     this.renderDropdowns();
   }
+  renderViewDate(date) {
+    const dateSelector = document.getElementById("date-selector");
+    dateSelector.value = date;
+  }
+  // updateViewDate(date) {
+  //   const dateSelector = document.getElementById("date-selector");
+  //   dateSelector.value = date;
+
   // generate the HTML for the dropdown menus
   renderDropdowns() {
     const groupSelector = document.getElementById("group-selector");
@@ -220,19 +228,10 @@ export default class View {
         handleGroupChange(selectedOption, id);
       });
     document.getElementById("previous").addEventListener("click", function () {
-      if (currentDateIndex > 0) {
-        currentDateIndex--;
-        document.getElementById("date-selector").value =
-          dates[currentDateIndex];
-      }
+      changeDate("previous");
     });
     document.getElementById("next").addEventListener("click", function () {
-      if (currentDateIndex > 0) {
-        currentDateIndex++;
-        console.log(currentDateIndex);
-        document.getElementById("date-selector").value =
-          dates[currentDateIndex];
-      }
+      changeDate("next");
     });
   }
 }

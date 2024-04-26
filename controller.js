@@ -3,11 +3,11 @@ import View, { userGroup, userCblGroup } from "./View.js";
 import {
   timetableFilter,
   getFormattedTimetable,
-  findDateIndex,
-  currentDateIndex,
+  getDateInfo,
 } from "./model.js";
 
 const view = new View();
+const dateInfo = getDateInfo();
 
 // declare reference groupings
 const groups = [
@@ -83,7 +83,16 @@ async function getTableHTML() {
   // Append the HTML to the DOM
   return tableHTML;
 }
-getTableHTML().then((tableHTML) => view.renderTable(tableHTML));
+getTableHTML().then((tableHTML) => {
+  view.renderTable(tableHTML);
+  view.renderViewDate(dateInfo.currentDate);
+});
+
+function changeDate(direction) {
+  dateInfo.viewDateIndex += direction === "previous" ? -1 : 1;
+  dateInfo.updadeViewDate(dateInfo);
+  view.renderViewDate(dateInfo.viewDate);
+}
 
 export {
   groups,
@@ -91,5 +100,6 @@ export {
   userGroup,
   userCblGroup,
   getTableHTML,
-  currentDateIndex,
+  dateInfo,
+  changeDate,
 };

@@ -2,9 +2,6 @@ import { groups, cblGroups, userGroup, userCblGroup } from "./controller.js";
 
 let fullTimetable;
 let formattedTimetable;
-let dates = getDatesArray(2023, 2024);
-let currentDate = getCurrentDate();
-let currentDateIndex;
 
 // Function to fetch data from a file path
 async function fetchData(filePath) {
@@ -182,32 +179,28 @@ function getCurrentDate() {
   return `${day}/${month}/${year}`;
 }
 
-// Match the current date to the dates index
-function findDateIndex() {
-  dates.forEach((date, i) => {
-    if (date === currentDate) {
-      currentDateIndex = i;
+// Generate an object with all date information
+function getDateInfo() {
+  let dateInfo = {
+    datesArray: getDatesArray(2023, 2024),
+    currentDate: getCurrentDate(),
+    currentDateIndex: "",
+    viewDate: "",
+    viewDateIndex: "",
+    updadeViewDate: function (dateInfo) {
+      dateInfo.datesArray.forEach((date, i) => {
+        if (i === dateInfo.viewDateIndex) dateInfo.viewDate = date;
+      });
+    },
+  };
+  dateInfo.datesArray.forEach((date, i) => {
+    if (date === dateInfo.currentDate) {
+      dateInfo.currentDateIndex = i;
+      dateInfo.viewDate = date;
+      dateInfo.viewDateIndex = i;
     }
   });
-}
-findDateIndex();
-
-function formatDate(date) {
-  // Format the date as "DD/MM/YY"
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const year = String(date.getFullYear()).slice(2);
-  return `${day}/${month}/${year}`;
+  return dateInfo;
 }
 
-// Previous and next date functions
-
-// Set the default date to today
-document.getElementById("date-selector").value = currentDate;
-
-export {
-  getFormattedTimetable,
-  timetableFilter,
-  findDateIndex,
-  currentDateIndex,
-};
+export { getFormattedTimetable, timetableFilter, getDateInfo };
