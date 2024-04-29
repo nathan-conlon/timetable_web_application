@@ -1,7 +1,8 @@
-import { getTableHTML, changeDate } from "./controller.js";
+import { getTableHTML, changeDate, dateInfo } from "./controller.js";
 
 let userGroup = "A01";
 let userCblGroup = "CBL01";
+let viewDate;
 
 const groups = [
   "A01",
@@ -74,11 +75,6 @@ export default class View {
     const dateSelector = document.getElementById("date-selector");
     dateSelector.value = date;
   }
-  // updateViewDate(date) {
-  //   const dateSelector = document.getElementById("date-selector");
-  //   dateSelector.value = date;
-
-  // generate the HTML for the dropdown menus
   renderDropdowns() {
     const groupSelector = document.getElementById("group-selector");
     const cblGroupSelector = document.getElementById("cbl-group-selector");
@@ -104,52 +100,38 @@ export default class View {
   }
   // generate the HTML for the schedule table
   generateTable(data) {
-    // Define the keys you want to include in the table
-    const keysToInclude = [
+    // Define the keys you want to include in the flexbox divs
+    const keys = [
       "Start Date",
       "Start Time",
-      "Group",
       "Location",
       "Subject",
       "Description",
     ];
 
-    // Generate table header HTML
-    const tableHeaderHTML = `
-      <thead>
-        <tr>
-          ${keysToInclude.map((key) => `<th>${key}</th>`).join("")}
-        </tr>
-      </thead>
-    `;
-
-    // Generate table body HTML
-    const tableBodyHTML = `
-      <tbody>
-        ${data
-          .map(
-            (item) => `
-          <tr>
-            ${keysToInclude
-              .map((key) => `<td>${item[key] || ""}</td>`)
-              .join("")}
-          </tr>
-        `
-          )
-          .join("")}
-      </tbody>
-    `;
-
-    // Generate complete table HTML
-    const tableHTML = `
-      <table class="schedule-table">
-        ${tableHeaderHTML}
-        ${tableBodyHTML}
-      </table>
-    `;
-
+    // Generate flexbox divs HTML
+    const tableHTML = data
+      // Iterate over each timetable entry
+      .map(
+        (item) => `
+    <div class="flexbox-container">
+    ${keys
+      // Iterate over each key
+      .map(
+        (key) => `
+      <div class="flexbox-item">
+        <div class="flexbox-item-value">${item[key] || ""}</div>
+      </div>
+    `
+      )
+      .join("")}
+    </div>
+`
+      )
+      .join("");
     return tableHTML;
   }
+
   // append the table to the DOM
   renderTable(markup) {
     // Clear existing content
@@ -159,36 +141,15 @@ export default class View {
   }
   updateTable() {
     getTableHTML()
-      .then((result) => {
-        const newMarkup = result;
-        const newDOM = document
-          .createRange()
-          .createContextualFragment(newMarkup);
-        const newElements = Array.from(newDOM.querySelectorAll("*"));
-        const curElements = Array.from(
-          this.parentElement.querySelectorAll("*")
-        );
-        newElements.forEach((newEl, i) => {
-          const curEl = curElements[i];
-          // Updates changed TEXT
-          if (
-            !newEl.isEqualNode(curEl) &&
-            newEl.firstChild?.nodeValue.trim() !== ""
-          ) {
-            curEl.textContent = newEl.textContent;
-          }
-
-          // Updates changed ATTRIBUES
-          if (!newEl.isEqualNode(curEl))
-            Array.from(newEl.attributes).forEach((attr) =>
-              curEl.setAttribute(attr.name, attr.value)
-            );
-        });
+      .then((tableHTML) => {
+        this.renderTable(tableHTML);
+        this.renderViewDate(dateInfo.viewDate);
       })
       .catch((error) => {
         console.error("Error while getting table HTML:", error);
       });
   }
+
   // function to handle group changes
   handleGroupChange(selectedOption, id) {
     if (id === "group-selector") {
@@ -200,6 +161,7 @@ export default class View {
       this.updateTable();
     }
   }
+  handleDateChange(date) {}
   // add event listeners to dropdown menu
   addEventListeners() {
     const handleGroupChange = this.handleGroupChange.bind(this);
