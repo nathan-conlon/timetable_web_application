@@ -2,7 +2,6 @@ import { getTableHTML, changeDate, dateInfo } from "./controller.js";
 
 let userGroup = "A01";
 let userCblGroup = "CBL01";
-let viewDate;
 
 const groups = [
   "A01",
@@ -129,6 +128,7 @@ export default class View {
 `
       )
       .join("");
+
     return tableHTML;
   }
 
@@ -138,16 +138,52 @@ export default class View {
     this.parentElement.innerHTML = "";
     // Append markup to schedule div
     this.parentElement.innerHTML = markup;
+
+    // Function to add animation class to flexbox containers
+    function animateContainers() {
+      const containers = document.querySelectorAll(".flexbox-container");
+      containers.forEach((container, index) => {
+        setTimeout(() => {
+          container.classList.add("show");
+        }, (index + 1) * 15);
+      });
+    }
+    // Call the animation function after the containers are injected into the DOM
+    animateContainers();
+
+    this.applyColorCode();
   }
   updateTable() {
     getTableHTML()
       .then((tableHTML) => {
         this.renderTable(tableHTML);
         this.renderViewDate(dateInfo.viewDate);
+        this.applyColorCode();
       })
       .catch((error) => {
         console.error("Error while getting table HTML:", error);
       });
+  }
+
+  applyColorCode() {
+    let items = document.querySelectorAll(".flexbox-container");
+    items.forEach((item) => {
+      let subject = item
+        .querySelectorAll(".flexbox-item")[3]
+        .textContent.trim();
+      if (subject === "Case Based Tutorial") {
+        item.style.backgroundColor = "#fde4cf";
+      }
+      if (subject === "Lecture") {
+        item.style.backgroundColor = "#f1c0e8";
+      }
+      if (subject === "Practical") {
+        item.style.backgroundColor = "#90dbf4";
+      }
+      if (subject === "Tutorial") {
+        item.style.backgroundColor = "#98f5e1";
+      }
+    });
   }
 
   // function to handle group changes

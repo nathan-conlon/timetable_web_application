@@ -4,7 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Timetable - Year 2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
     <script
       type="text/javascript"
@@ -12,35 +18,47 @@
     ></script>
   </head>
   <body>
-    <div>
-      <label for="group-selector">Group:</label>
-      <select id="group-selector">
-        <option value="">Select Group</option>
-      </select>
+    <div id="timetable-container">
+      <div id="menu">
+        <div>
+          <div id="group-menu">
+            <label for="group-selector">Group:&nbsp;</label>
+            <select id="group-selector" style="margin-right: 30px">
+              <option value="">Select Group</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <div>
+            <label for="cbl-group-selector">CBL group:&nbsp;</label>
+            <select id="cbl-group-selector">
+              <option value="">Select CBL Group</option>
+            </select>
+          </div>
+        </div>
 
-      <label for="cbl-group-selector">CBL Group:</label>
-      <select id="cbl-group-selector">
-        <option value="">Select CBL Group</option>
-      </select>
-      <label for="date-selector">Date:</label>
-      <input type="text" id="date-selector"/>
-      <button id="previous">Previous</button>
-      <button id="next"">Next</button>
-    </div>
+        <div id="date-menu">
+          <button id="previous" class="previous-and-next"><</button>
+          <label for="date-selector"></label>
+          <input type="text" id="date-selector" />
+          <button id="next" class="previous-and-next">></button>
+        </div>
+      </div>
 
-    <pre id="jsonData"></pre>
-    <h2>Course Schedule</h2>
+      <pre id="jsonData"></pre>
 
-    <p>
-      <label for="view-mode">View mode:</label>
-      <select id="view-mode">
-        <option value="daily">Daily</option>
-        <option value="weekly">Weekly</option>
-      </select>
-    </p>
-
-    <div id="schedule">
-      <!-- Schedule content will be dynamically inserted here -->
+      <div id="keys">
+        <div class="flexbox-container">
+          <div class="flexbox-item">Date</div>
+          <div class="flexbox-item">Time</div>
+          <div class="flexbox-item">Location</div>
+          <div class="flexbox-item">Subject</div>
+          <div class="flexbox-item">Description</div>
+        </div>
+      </div>
+      <div id="schedule">
+        <!-- Schedule content will be dynamically inserted here -->
+      </div>
     </div>
     <script type="module" src="model.js"></script>
     <script type="module" src="controller.js"></script>

@@ -1,37 +1,123 @@
-table {
-  border-collapse: collapse;
+/* MENU */
+
+#timetable-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: clamp(90%, 80%, 1600px);
+}
+
+#timetable-container * {
+  font-size: 1.4vw;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+@media only screen and (max-width: 1024px) and (orientation: landscape) {
+  #timetable-container * {
+    font-size: 1.8vw; /* Adjust the value as needed */
+  }
+}
+
+/* Adjust font size for tablets (portrait) */
+@media only screen and (max-width: 768px) and (orientation: portrait) {
+  #timetable-container * {
+    font-size: 2.2vw; /* Adjust the value as needed */
+  }
+}
+
+/* Adjust font size for phones */
+@media only screen and (max-width: 480px) {
+  #timetable-container * {
+    font-size: 2.6vw; /* Adjust the value as needed */
+  }
+}
+
+#menu {
+  display: flex;
+  flex-direction: row;
+  margin: 10px auto;
+  margin: auto;
   width: 100%;
 }
 
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+#date-menu {
+  margin-left: auto;
 }
 
-th {
-  background-color: #f2f2f2;
+/* GROUP SELECTORS */
+
+/* DATE SELECTOR */
+#date-selector {
+  width: 160px;
+  text-align: center;
 }
 
-/* GRID */
+/* SCHEDULE*/
+#keys {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 100%;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.5);
+  margin-bottom: 40px;
+}
+
+#schedule {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 100%;
+}
 
 .flexbox-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 10px;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* flexbox fade-in etc */
+
+.flexbox-container {
+  opacity: 0; /* Initially hide the containers */
+  transform: translateY(-20px); /* Move containers up */
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Add transition effect */
+}
+
+.flexbox-container.show {
+  opacity: 1; /* Show the containers */
+  transform: translateY(0); /* Move containers to their original position */
 }
 
 .flexbox-item {
-  flex: 1 1 200px;
-  border: 1px solid #ccc;
+  flex: 1 1 auto;
   padding: 10px;
 }
 
-.flexbox-item-key {
-  font-weight: bold;
+.flexbox-item:nth-child(1) {
+  width: 12%;
 }
 
-.flexbox-item-value {
-  margin-top: 5px;
+.flexbox-item:nth-child(2) {
+  width: 8%;
+}
+
+.flexbox-item:nth-child(3) {
+  width: 22%;
+}
+
+.flexbox-item:nth-child(4) {
+  width: 24%;
+}
+
+.flexbox-item:nth-child(5) {
+  width: 34%;
 }
