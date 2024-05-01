@@ -29,8 +29,25 @@
 
 /* GROUP SELECTORS */
 
+#group-menu {
+  margin-right: 4vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#cbl-group-menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 #group-selector {
-  margin-right: 5vw;
+  margin-right: 0.5vw;
+}
+
+#cbl-group-selector {
+  margin-right: 0.5vw;
 }
 
 /* DATE SELECTOR */
@@ -106,9 +123,49 @@
   width: 34%;
 }
 
+/* info question mark icon */
+
+/* Icon styles */
+.icon-question {
+  position: relative;
+  display: inline-block;
+  width: 20px; /* Adjust size as needed */
+  height: 20px; /* Adjust size as needed */
+  background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent background */
+  border-radius: 50%;
+  cursor: pointer;
+}
+.icon-question:before {
+  content: "?";
+  font-size: 16px; /* Adjust size as needed */
+  color: rgba(0, 0, 0, 0.5); /* Semi-transparent color */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Hover label styles */
+.hover-label {
+  display: none;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.5vw;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  top: 2vw;
+  left: 0vw;
+  width: 10vw;
+  font-size: 1vw !important;
+}
+.icon-question:hover .hover-label {
+  display: block;
+}
+
 @media only screen and (max-width: 1024px) and (orientation: landscape) {
   #master-container * {
-    font-size: 1.8vw; /* Adjust the value as needed */
+    font-size: 1.8vw;
   }
 }
 
