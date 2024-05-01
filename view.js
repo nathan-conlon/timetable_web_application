@@ -73,6 +73,15 @@ export default class View {
   renderViewDate(date) {
     const dateSelector = document.getElementById("date-selector");
     dateSelector.value = date;
+    const previousBtn = document.getElementById("previous");
+    const nextBtn = document.getElementById("next");
+    previousBtn.disabled =
+      dateInfo.viewDateIndex ===
+      dateInfo.datesArray.indexOf(dateInfo.datesArray[0])
+        ? true
+        : false;
+    nextBtn.disabled =
+      dateInfo.viewDateIndex === dateInfo.datesArray.length - 1 ? true : false;
   }
   renderDropdowns() {
     const groupSelector = document.getElementById("group-selector");
@@ -113,13 +122,13 @@ export default class View {
       // Iterate over each timetable entry
       .map(
         (item) => `
-    <div class="flexbox-container">
+    <div class="timetable-container">
     ${keys
       // Iterate over each key
       .map(
         (key) => `
-      <div class="flexbox-item">
-        <div class="flexbox-item-value">${item[key] || ""}</div>
+      <div class="timetable-item">
+        <div class="timetable-item-value">${item[key] || ""}</div>
       </div>
     `
       )
@@ -141,7 +150,7 @@ export default class View {
 
     // Function to add animation class to flexbox containers
     function animateContainers() {
-      const containers = document.querySelectorAll(".flexbox-container");
+      const containers = document.querySelectorAll(".timetable-container");
       containers.forEach((container, index) => {
         setTimeout(() => {
           container.classList.add("show");
@@ -166,10 +175,10 @@ export default class View {
   }
 
   applyColorCode() {
-    let items = document.querySelectorAll(".flexbox-container");
+    let items = document.querySelectorAll(".timetable-container");
     items.forEach((item) => {
       let subject = item
-        .querySelectorAll(".flexbox-item")[3]
+        .querySelectorAll(".timetable-item")[3]
         .textContent.trim();
       if (subject === "Case Based Tutorial") {
         item.style.backgroundColor = "#fde4cf";
@@ -226,11 +235,15 @@ export default class View {
       });
     document.getElementById("previous").addEventListener("click", () => {
       changeDate("previous");
-      this.updateTable(); // Use `this.updateTable()` here
+      this.updateTable();
     });
     document.getElementById("next").addEventListener("click", () => {
       changeDate("next");
-      this.updateTable(); // Use `this.updateTable()` here
+      this.updateTable();
+    });
+    document.getElementById("date-selector").addEventListener("change", () => {
+      changeDate("textEntry");
+      this.updateTable();
     });
   }
 }

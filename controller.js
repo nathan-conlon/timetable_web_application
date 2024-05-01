@@ -16,7 +16,10 @@ async function getTableHTML() {
   // Filter the timetable
   const filteredTimetable = timetableFilter(formattedTimetable);
   // Apply date filter
-  const dateFilteredTimetable = dateFilter(filteredTimetable);
+  const dateFilteredTimetable = dateFilter(
+    filteredTimetable,
+    dateInfo.viewDate
+  );
   // Generate the timetable HTML
   const tableHTML = view.generateTable(dateFilteredTimetable);
   // Append the HTML to the DOM
@@ -28,10 +31,21 @@ getTableHTML().then((tableHTML) => {
 });
 
 function changeDate(direction) {
-  dateInfo.viewDateIndex += direction === "previous" ? -1 : 1;
-  dateInfo.updateViewDate(dateInfo);
-  view.renderViewDate(dateInfo.viewDate);
-  view.updateTable();
+  if (direction === "previous" || direction === "next") {
+    dateInfo.viewDateIndex += direction === "previous" ? -1 : 1;
+    dateInfo.updateViewDate(dateInfo);
+    view.updateTable();
+  }
+  if (direction === "textEntry") {
+    const dateEntry = document.getElementById("date-selector").value;
+    dateInfo.datesArray.forEach((date, i) => {
+      if (date === dateEntry) {
+        dateInfo.viewDate = dateEntry;
+        dateInfo.viewDateIndex = i;
+        view.updateTable();
+      }
+    });
+  }
 }
 
 export { userGroup, userCblGroup, getTableHTML, dateInfo, changeDate };

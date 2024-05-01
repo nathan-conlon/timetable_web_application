@@ -221,16 +221,16 @@ function timetableFilter(data) {
 
 // DATE FILTER NEEDS WORK
 
-function dateFilter(data) {
-  let filteredTimetable = data.filter((entries) =>
-    entries["Start Date"].includes(dateInfo.viewDate)
-  );
+function dateFilter(data, viewDate) {
+  let filteredTimetable = data.filter((entries) => {
+    return entries["Start Date"].includes(viewDate);
+  });
   return filteredTimetable;
 }
 
 // Generate an array of dates in the calendar year
 function getDatesArray(startYear, endYear) {
-  var startDate = new Date(startYear, 8, 1); // September is month 8 (0-indexed)
+  var startDate = new Date(startYear, 4, 1); // May is month 4 (0-indexed)
   var endDate = new Date(endYear, 4, 1); // May is month 4 (0-indexed)
   var datesArray = [];
 
@@ -264,7 +264,7 @@ function getCurrentDate() {
 // Generate an object with all date information
 function getDateInfo() {
   let dateInfo = {
-    datesArray: getDatesArray(2023, 2024),
+    datesArray: getDatesArray(2024, 2025),
     currentDate: getCurrentDate(),
     currentDateIndex: "",
     viewDate: "",

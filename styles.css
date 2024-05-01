@@ -1,38 +1,18 @@
 /* MENU */
 
-#timetable-container {
+#master-container {
   padding: 20px;
   display: flex;
   flex-direction: column;
   margin: auto;
-  width: clamp(90%, 80%, 1600px);
+  width: clamp(360px, 80%, 1600px);
 }
 
-#timetable-container * {
-  font-size: 1.4vw;
+#master-container * {
+  font-size: 1.2vw;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-style: normal;
-}
-
-@media only screen and (max-width: 1024px) and (orientation: landscape) {
-  #timetable-container * {
-    font-size: 1.8vw; /* Adjust the value as needed */
-  }
-}
-
-/* Adjust font size for tablets (portrait) */
-@media only screen and (max-width: 768px) and (orientation: portrait) {
-  #timetable-container * {
-    font-size: 2.2vw; /* Adjust the value as needed */
-  }
-}
-
-/* Adjust font size for phones */
-@media only screen and (max-width: 480px) {
-  #timetable-container * {
-    font-size: 2.6vw; /* Adjust the value as needed */
-  }
 }
 
 #menu {
@@ -49,9 +29,13 @@
 
 /* GROUP SELECTORS */
 
+#group-selector {
+  margin-right: 5vw;
+}
+
 /* DATE SELECTOR */
 #date-selector {
-  width: 160px;
+  width: 10vw;
   text-align: center;
 }
 
@@ -72,10 +56,10 @@
   width: 100%;
 }
 
-.flexbox-container {
+.timetable-container {
   margin-top: 10px;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 0.5%;
   width: 100%;
   display: flex;
   flex-wrap: nowrap;
@@ -86,38 +70,58 @@
 
 /* flexbox fade-in etc */
 
-.flexbox-container {
+.timetable-container {
   opacity: 0; /* Initially hide the containers */
   transform: translateY(-20px); /* Move containers up */
   transition: opacity 0.5s ease, transform 0.5s ease; /* Add transition effect */
 }
 
-.flexbox-container.show {
+.timetable-container.show {
   opacity: 1; /* Show the containers */
   transform: translateY(0); /* Move containers to their original position */
 }
 
-.flexbox-item {
+.timetable-item {
   flex: 1 1 auto;
   padding: 10px;
 }
 
-.flexbox-item:nth-child(1) {
+.timetable-item:nth-child(1) {
   width: 12%;
 }
 
-.flexbox-item:nth-child(2) {
+.timetable-item:nth-child(2) {
   width: 8%;
 }
 
-.flexbox-item:nth-child(3) {
-  width: 22%;
+.timetable-item:nth-child(3) {
+  width: 16%;
 }
 
-.flexbox-item:nth-child(4) {
+.timetable-item:nth-child(4) {
   width: 24%;
 }
 
-.flexbox-item:nth-child(5) {
+.timetable-item:nth-child(5) {
   width: 34%;
+}
+
+@media only screen and (max-width: 1024px) and (orientation: landscape) {
+  #master-container * {
+    font-size: 1.8vw; /* Adjust the value as needed */
+  }
+}
+
+/* Adjust font size for tablets (portrait) */
+@media only screen and (max-width: 768px) and (orientation: portrait) {
+  #master-container * {
+    font-size: 2.2vw; /* Adjust the value as needed */
+  }
+}
+
+/* Adjust font size for phones */
+@media only screen and (max-width: 480px) {
+  #master-container * {
+    font-size: 2.6vw; /* Adjust the value as needed */
+  }
 }
