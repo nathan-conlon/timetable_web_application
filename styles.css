@@ -5,11 +5,11 @@
   display: flex;
   flex-direction: column;
   margin: auto;
-  width: clamp(360px, 80%, 1600px);
+  width: 90%;
 }
 
 #master-container * {
-  font-size: 1.2vw;
+  font-size: 20px;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-style: normal;
@@ -25,34 +25,41 @@
 
 #date-menu {
   margin-left: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 /* GROUP SELECTORS */
 
 #group-menu {
-  margin-right: 4vw;
+  padding: 2px;
+  border: 2px;
+  margin-right: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
 #cbl-group-menu {
+  padding: 2px;
+  border: 2px;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
 #group-selector {
-  margin-right: 0.5vw;
+  margin-right: 5px;
 }
 
 #cbl-group-selector {
-  margin-right: 0.5vw;
+  margin-right: 5px;
 }
 
 /* DATE SELECTOR */
 #date-selector {
-  width: 10vw;
+  width: 160px;
   text-align: center;
 }
 
@@ -104,23 +111,23 @@
 }
 
 .timetable-item:nth-child(1) {
-  width: 12%;
+  width: 7%;
 }
 
 .timetable-item:nth-child(2) {
-  width: 8%;
+  width: 7%;
 }
 
 .timetable-item:nth-child(3) {
-  width: 16%;
+  min-width: 14%;
 }
 
 .timetable-item:nth-child(4) {
-  width: 24%;
+  min-width: 23%;
 }
 
 .timetable-item:nth-child(5) {
-  width: 34%;
+  width: 33%;
 }
 
 /* info question mark icon */
@@ -149,36 +156,81 @@
 .hover-label {
   display: none;
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 0.5vw;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 10px;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   z-index: 1;
   top: 2vw;
   left: 0vw;
-  width: 10vw;
-  font-size: 1vw !important;
+  width: auto;
+  white-space: nowrap;
 }
 .icon-question:hover .hover-label {
   display: block;
 }
 
-@media only screen and (max-width: 1024px) and (orientation: landscape) {
+@media only screen and (max-width: 1224px) {
   #master-container * {
-    font-size: 1.8vw;
+    font-size: 16px;
   }
 }
 
 /* Adjust font size for tablets (portrait) */
-@media only screen and (max-width: 768px) and (orientation: portrait) {
+@media only screen and (max-width: 768px) {
   #master-container * {
-    font-size: 2.2vw; /* Adjust the value as needed */
+    font-size: 16px; /* Adjust the value as needed */
+  }
+  #date-selector {
+    width: 120px;
+    text-align: center;
+  }
+  .timetable-item:nth-child(1) {
+    min-width: 4%;
+    max-width: 7%;
+  }
+  .timetable-item:nth-child(3) {
+    min-width: 16%;
+    max-width: 22%;
   }
 }
 
 /* Adjust font size for phones */
 @media only screen and (max-width: 480px) {
   #master-container * {
-    font-size: 2.6vw; /* Adjust the value as needed */
+    font-size: 3.4vw; /* Adjust the value as needed */
+  }
+  #master-container {
+    width: 95%;
+    margin: 0;
+    padding: 5px;
+  }
+  #keys {
+    margin-bottom: 20px;
+  }
+  #date-selector {
+    width: 17vw;
+  }
+  #group-menu {
+    margin-right: 5px;
+  }
+  #group-selector {
+    margin-right: 5px;
+  }
+  #cbl-group-selector {
+    margin-right: 5px;
+  }
+  .icon-question:hover .hover-label {
+    display: none;
+  }
+  .hover-label {
+    white-space: wrap;
+    width: 30vw;
+    top: 6vw;
+    left: 0vw;
+    display: none; /* Initially hide the label */
+  }
+  .icon-question.active .hover-label {
+    display: block; /* Display the label when the icon is clicked */
   }
 }

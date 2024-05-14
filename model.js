@@ -95,7 +95,6 @@ async function parseWorkbook(data) {
     const fullTimetable = workbook.SheetNames.flatMap((sheet) =>
       XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet])
     );
-
     return fullTimetable;
   } catch (error) {
     console.error("Error occurred while parsing workbook:", error);
@@ -107,23 +106,39 @@ async function parseWorkbook(data) {
 
 // function to format times
 function excelTimeToReadable(excelTime) {
-  // Convert Excel fractional time to milliseconds (24 hours in a day, 60 minutes in an hour, 60 seconds in a minute, 1000 milliseconds in a second)
-  var milliseconds = excelTime * 24 * 60 * 60 * 1000;
+  if (typeof excelTime === "string") {
+    let [time, indicator] = excelTime.split(/(?=[ap]m)/i);
+    let [hours, minutes] = time.split(":");
 
-  // Create a new Date object with the milliseconds
-  var date = new Date(milliseconds);
+    // Convert hours to 24-hour format
+    if (indicator && /pm/i.test(indicator) && hours != "12") {
+      hours = String(parseInt(hours, 10) + 12);
+    } else if (indicator && /am/i.test(indicator) && hours === "12") {
+      hours = "00";
+    }
 
-  // Extract hours and minutes
-  var hours = date.getUTCHours();
-  var minutes = date.getUTCMinutes();
+    // Format the hours and minutes
+    hours = hours.padStart(2, "0");
+    minutes = String(parseInt(minutes, 10)).padStart(2, "0");
+    return `${hours}:${minutes}`;
+  } else {
+    // Convert Excel fractional time to milliseconds (24 hours in a day, 60 minutes in an hour, 60 seconds in a minute, 1000 milliseconds in a second)
+    var milliseconds = excelTime * 24 * 60 * 60 * 1000;
 
-  // Format the time
-  var formattedTime =
-    hours.toString().padStart(2, "0") +
-    ":" +
-    minutes.toString().padStart(2, "0");
+    // Create a new Date object with the milliseconds
+    var date = new Date(milliseconds);
 
-  return formattedTime;
+    // Extract hours and minutes
+    var hours = date.getUTCHours();
+    var minutes = date.getUTCMinutes();
+
+    // Format the time
+    var formattedTime =
+      hours.toString().padStart(2, "0") +
+      ":" +
+      minutes.toString().padStart(2, "0");
+    return formattedTime;
+  }
 }
 
 // function to format dates
@@ -178,7 +193,6 @@ async function getFormattedTimetable() {
         delete entry[key];
       }
     });
-
     // Logic for formatting groups into an array
     if (entry.Group.includes("-")) {
       // Split the groups into string iterations

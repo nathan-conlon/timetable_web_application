@@ -69,6 +69,7 @@ export default class View {
   constructor() {
     this.addEventListeners();
     this.renderDropdowns();
+    this.handleResize();
   }
   renderViewDate(date) {
     const dateSelector = document.getElementById("date-selector");
@@ -110,8 +111,8 @@ export default class View {
   generateTable(data) {
     // Define the keys you want to include in the flexbox divs
     const keys = [
-      "Start Date",
       "Start Time",
+      "End Time",
       "Location",
       "Subject",
       "Description",
@@ -137,7 +138,6 @@ export default class View {
 `
       )
       .join("");
-
     return tableHTML;
   }
 
@@ -168,6 +168,7 @@ export default class View {
         this.renderTable(tableHTML);
         this.renderViewDate(dateInfo.viewDate);
         this.applyColorCode();
+        this.handleResize();
       })
       .catch((error) => {
         console.error("Error while getting table HTML:", error);
@@ -206,9 +207,47 @@ export default class View {
       this.updateTable();
     }
   }
-  handleDateChange(date) {}
+  handleResize() {
+    var iconQuestions = document.getElementsByClassName("icon-question");
+    Array.from(iconQuestions).forEach((q) => q.classList.remove("active"));
+    const timetableContainers = document.querySelectorAll(
+      ".timetable-container"
+    );
+
+    timetableContainers.forEach((container) => {
+      const children = container.children;
+
+      if (window.innerWidth < 768) {
+        // Hide the 2nd and 4th children
+        children[1].style.display = "none"; // 2nd child
+        children[3].style.display = "none"; // 4th child
+      } else {
+        // Show the 2nd and 4th children
+        children[1].style.display = "block"; // 2nd child
+        children[3].style.display = "block"; // 4th child
+      }
+    });
+  }
   // add event listeners to dropdown menu
   addEventListeners() {
+    if (window.innerWidth <= 480) {
+      var groupContainer = document.getElementById("group-container");
+      groupContainer.addEventListener("click", function (e) {
+        if (e.target.classList.contains("icon-question")) {
+          e.target.classList.toggle("active");
+
+          // Get all elements inside groupContainer
+          var elements = groupContainer.querySelectorAll(".icon-question");
+
+          // Iterate through each element and remove 'active' class except for e.target
+          elements.forEach(function (element) {
+            if (element !== e.target && element.classList.contains("active")) {
+              element.classList.remove("active");
+            }
+          });
+        }
+      });
+    }
     const handleGroupChange = this.handleGroupChange.bind(this);
     document
       .getElementById("group-selector")
@@ -245,6 +284,7 @@ export default class View {
       changeDate("textEntry");
       this.updateTable();
     });
+    window.addEventListener("resize", this.handleResize);
   }
 }
 
