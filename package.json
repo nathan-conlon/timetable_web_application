@@ -1,7 +1,7 @@
 {
   "name": "timetable-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Timetable application to be used in conjunction with the years 1 and 2 Medicine timetables.",
   "main": "generateTableContent.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,6 +9,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "puppeteer": "^22.6.2"
-  }
+    "puppeteer": "^22.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathan-conlon/timetable_web_application.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/nathan-conlon/timetable_web_application/issues"
+  },
+  "homepage": "https://github.com/nathan-conlon/timetable_web_application#readme"
 }

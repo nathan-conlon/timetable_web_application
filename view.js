@@ -95,7 +95,7 @@ export default class View {
   }
   getLocalStorage() {
     userGroup = localStorage.getItem("userGroup") || "A01";
-    userCblGroup = localStorage.getItem("userCblGroup" || "CBL01");
+    userCblGroup = localStorage.getItem("userCblGroup") || "CBL01";
   }
   renderDropdowns() {
     const groupSelector = document.getElementById("group-selector");
