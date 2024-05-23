@@ -5,10 +5,10 @@ let userCblGroup;
 
 // Local storage
 const persistGroup = function () {
-  localStorage.setItem("userGroup", JSON.stringify(userGroup));
+  localStorage.setItem("userGroup", userGroup);
 };
 const persistCblGroup = function () {
-  localStorage.setItem("userCblGroup", JSON.stringify(userCblGroup));
+  localStorage.setItem("userCblGroup", userCblGroup);
 };
 
 const groups = [
@@ -118,8 +118,8 @@ export default class View {
       option.value = cblGroup;
       cblGroupSelector.appendChild(option);
     });
-    groupSelector.value = JSON.parse(userGroup);
-    cblGroupSelector.value = JSON.parse(userCblGroup);
+    groupSelector.value = userGroup;
+    cblGroupSelector.value = userCblGroup;
   }
   // generate the HTML for the schedule table
   generateTable(data) {
@@ -207,13 +207,19 @@ export default class View {
         item.style.backgroundColor = "#fde4cf";
       }
       if (subject === "Lecture") {
-        item.style.backgroundColor = "#f1c0e8";
+        item.style.backgroundColor = "#90dbf4";
       }
       if (subject === "Practical") {
-        item.style.backgroundColor = "#90dbf4";
+        item.style.backgroundColor = "#f1c0e8";
       }
       if (subject === "Tutorial") {
         item.style.backgroundColor = "#98f5e1";
+      }
+      if (subject === "Other") {
+        item.style.backgroundColor = "#e5e5e5";
+      }
+      if (subject === "Workshop") {
+        item.style.backgroundColor = "#ff8fa3";
       }
     });
   }

@@ -119,11 +119,11 @@
 }
 
 .timetable-item:nth-child(3) {
-  min-width: 14%;
+  width: 14%;
 }
 
 .timetable-item:nth-child(4) {
-  min-width: 23%;
+  width: 23%;
 }
 
 .timetable-item:nth-child(5) {

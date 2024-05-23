@@ -15,14 +15,14 @@ async function main() {
   const client = await page.target().createCDPSession();
 
   // Delete the existing file before triggering the download
-  const downloadFilePath = path.join(__dirname, "filename.ext"); // Adjust the filename and extension as needed
-  try {
-    await fs.unlink(downloadFilePath); // Attempt to delete the file
-    console.log(`Deleted existing file: ${downloadFilePath}`);
-  } catch (error) {
-    // If the file does not exist or there's an error deleting it, ignore the error
-    console.log(`No existing file to delete: ${downloadFilePath}`);
-  }
+  // const downloadFilePath = path.join(__dirname, "filename.ext"); // Adjust the filename and extension as needed
+  // try {
+  //   await fs.unlink(downloadFilePath); // Attempt to delete the file
+  //   console.log(`Deleted existing file: ${downloadFilePath}`);
+  // } catch (error) {
+  //   // If the file does not exist or there's an error deleting it, ignore the error
+  //   console.log(`No existing file to delete: ${downloadFilePath}`);
+  // }
 
   // Set download behavior to allow and specify download path
   await client.send("Page.setDownloadBehavior", {

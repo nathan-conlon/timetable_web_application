@@ -106,7 +106,9 @@ async function parseWorkbook(data) {
 
 // function to format times
 function excelTimeToReadable(excelTime) {
-  if (typeof excelTime === "string") {
+  if (excelTime === "N/A") {
+    return "N/A";
+  } else if (typeof excelTime === "string") {
     let [time, indicator] = excelTime.split(/(?=[ap]m)/i);
     let [hours, minutes] = time.split(":");
 
@@ -141,6 +143,25 @@ function excelTimeToReadable(excelTime) {
   }
 }
 
+// function to capitalise first letter of each word only
+
+function capitaliseFirstLetter(subject) {
+  // Split the string into an array of words
+  let words = subject.split(" ");
+
+  // Iterate through the array and capitalize the first letter of each word
+  for (let i = 0; i < words.length; i++) {
+    let word = words[i];
+    if (word.length > 0) {
+      // Capitalize the first letter and convert the rest to lowercase
+      words[i] = word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    }
+  }
+
+  // Join the array back into a string and return
+  return words.join(" ");
+}
+
 // function to format dates
 function excelDateToReadable(excelDate) {
   // Excel stores dates as the number of days since January 0, 1900 (with January 1, 1900, as day 1).
@@ -172,7 +193,7 @@ function excelDateToReadable(excelDate) {
 
 // Main function to orchestrate the process
 async function getFormattedTimetable() {
-  const fileName = "Year2_GERR_Timetable.xlsx";
+  const fileName = "Year1_FOCS_Timetable.xlsx";
   const filePath = fileName;
 
   try {
@@ -217,6 +238,7 @@ async function getFormattedTimetable() {
     // convert timestamps
     entry["Start Date"] = excelDateToReadable(entry["Start Date"]);
     entry["Start Time"] = excelTimeToReadable(entry["Start Time"]);
+    entry["Subject"] = capitaliseFirstLetter(entry["Subject"]);
     entry["End Time"] = excelTimeToReadable(entry["End Time"]);
 
     return entry; // Return the modified entry
