@@ -1,7 +1,15 @@
 import { getTableHTML, changeDate, dateInfo } from "./controller.js";
 
-let userGroup = "A01";
-let userCblGroup = "CBL01";
+let userGroup;
+let userCblGroup;
+
+// Local storage
+const persistGroup = function () {
+  localStorage.setItem("userGroup", JSON.stringify(userGroup));
+};
+const persistCblGroup = function () {
+  localStorage.setItem("userCblGroup", JSON.stringify(userCblGroup));
+};
 
 const groups = [
   "A01",
@@ -68,6 +76,7 @@ export default class View {
   parentElement = document.getElementById("schedule");
   constructor() {
     this.addEventListeners();
+    this.getLocalStorage();
     this.renderDropdowns();
     this.handleResize();
   }
@@ -84,6 +93,10 @@ export default class View {
     nextBtn.disabled =
       dateInfo.viewDateIndex === dateInfo.datesArray.length - 1 ? true : false;
   }
+  getLocalStorage() {
+    userGroup = localStorage.getItem("userGroup") || "A01";
+    userCblGroup = localStorage.getItem("userCblGroup" || "CBL01");
+  }
   renderDropdowns() {
     const groupSelector = document.getElementById("group-selector");
     const cblGroupSelector = document.getElementById("cbl-group-selector");
@@ -98,7 +111,6 @@ export default class View {
       option.value = group;
       groupSelector.appendChild(option);
     });
-
     // Add options for CBL groups
     cblGroups.forEach((cblGroup) => {
       const option = document.createElement("option");
@@ -106,6 +118,8 @@ export default class View {
       option.value = cblGroup;
       cblGroupSelector.appendChild(option);
     });
+    groupSelector.value = JSON.parse(userGroup);
+    cblGroupSelector.value = JSON.parse(userCblGroup);
   }
   // generate the HTML for the schedule table
   generateTable(data) {
@@ -118,24 +132,32 @@ export default class View {
       "Description",
     ];
 
+    // Helper function to parse the time
+    const parseTime = (timeStr) => new Date(`1970-01-01T${timeStr}:00`);
+
+    // Sort the data array by the "Start Time"
+    data.sort(
+      (a, b) => parseTime(a["Start Time"]) - parseTime(b["Start Time"])
+    );
+
     // Generate flexbox divs HTML
     const tableHTML = data
       // Iterate over each timetable entry
       .map(
         (item) => `
-    <div class="timetable-container">
-    ${keys
-      // Iterate over each key
-      .map(
-        (key) => `
-      <div class="timetable-item">
-        <div class="timetable-item-value">${item[key] || ""}</div>
+      <div class="timetable-container">
+      ${keys
+        // Iterate over each key
+        .map(
+          (key) => `
+        <div class="timetable-item">
+          <div class="timetable-item-value">${item[key] || ""}</div>
+        </div>
+      `
+        )
+        .join("")}
       </div>
-    `
-      )
-      .join("")}
-    </div>
-`
+  `
       )
       .join("");
     return tableHTML;
@@ -200,10 +222,12 @@ export default class View {
   handleGroupChange(selectedOption, id) {
     if (id === "group-selector") {
       userGroup = selectedOption;
+      persistGroup();
       this.updateTable();
     }
     if (id === "cbl-group-selector") {
       userCblGroup = selectedOption;
+      persistCblGroup();
       this.updateTable();
     }
   }

@@ -233,8 +233,6 @@ function timetableFilter(data) {
   return filteredTimetable;
 }
 
-// DATE FILTER NEEDS WORK
-
 function dateFilter(data, viewDate) {
   let filteredTimetable = data.filter((entries) => {
     return entries["Start Date"].includes(viewDate);
