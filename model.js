@@ -215,6 +215,7 @@ async function getFormattedTimetable() {
       }
     });
     // Logic for formatting groups into an array
+    if (entry.Group.includes("ALL")) entry.Group = entry.Group.trim();
     if (entry.Group.includes("-")) {
       // Split the groups into string iterations
       let string = entry.Group.split("-");
