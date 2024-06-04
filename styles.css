@@ -1,18 +1,32 @@
+body {
+  padding: 0;
+}
+
 /* MENU */
 
 #master-container {
   padding: 20px;
-  display: flex;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   flex-direction: column;
-  margin: auto;
-  width: 90%;
+  align-items: center;
+  width: 85%;
 }
 
 #master-container * {
-  font-size: 20px;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-style: normal;
+}
+#group-selector,
+#cbl-group-selector,
+#date-selector {
+  font-size: 20px;
+}
+
+#schedule * {
+  font-size: 16px;
 }
 
 #menu {
@@ -23,18 +37,42 @@
   width: 100%;
 }
 
-#date-menu {
-  margin-left: auto;
+/* date menu */
+
+#date-menu-container {
+  background-color: #3498db;
+  padding: 10px;
+  border-radius: 20px;
+  margin-right: 10px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
+}
+
+.date-buttons .previous-and-next {
+  font-size: 50px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 60px;
+}
+
+#date-menu #date-selector {
+  padding: 10px 5px;
+  border: none;
+  border-radius: 10px;
+  width: 110px;
+}
+
+.date-buttons {
+  align-self: center;
 }
 
 /* GROUP SELECTORS */
 
 #group-menu {
-  padding: 2px;
-  border: 2px;
   margin-right: 20px;
   display: flex;
   flex-direction: row;
@@ -42,24 +80,44 @@
 }
 
 #cbl-group-menu {
-  padding: 2px;
-  border: 2px;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
 #group-selector {
+  margin-bottom: 5px;
   margin-right: 5px;
+  background-color: #3498db;
+  color: white;
+  padding: 20px 15px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 140px;
+  text-align: left;
 }
 
 #cbl-group-selector {
   margin-right: 5px;
+  background-color: #3498db;
+  color: white;
+  padding: 20px 15px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 140px;
+  text-align: left;
 }
 
 /* DATE SELECTOR */
 #date-selector {
-  width: 160px;
+  color: #313639;
+  margin-bottom: 3px;
+  border: 0;
+  padding: 8px;
+  border-radius: 10px;
+  width: 140px;
   text-align: center;
 }
 
@@ -119,11 +177,11 @@
 }
 
 .timetable-item:nth-child(3) {
-  width: 14%;
+  width: 18%;
 }
 
 .timetable-item:nth-child(4) {
-  width: 23%;
+  width: 19%;
 }
 
 .timetable-item:nth-child(5) {
@@ -170,19 +228,25 @@
   display: block;
 }
 
-@media only screen and (max-width: 1224px) {
-  #master-container * {
-    font-size: 16px;
-  }
+.date-buttons > .previous-and-next {
+  font-size: 50px;
 }
 
 /* Adjust font size for tablets (portrait) */
 @media only screen and (max-width: 768px) {
-  #master-container * {
+  #schedule * {
     font-size: 16px; /* Adjust the value as needed */
   }
+  #group-selector,
+  #cbl-group-selector,
   #date-selector {
-    width: 120px;
+    font-size: 16px;
+  }
+  .previous-and-next {
+    font-size: 40px;
+  }
+  #date-selector {
+    width: 110px;
     text-align: center;
   }
   .timetable-item:nth-child(1) {
@@ -197,10 +261,18 @@
 
 /* Adjust font size for phones */
 @media only screen and (max-width: 480px) {
-  #master-container * {
-    font-size: 3.4vw; /* Adjust the value as needed */
+  #schedule * {
+    font-size: 3.2vw; /* Adjust the value as needed */
   }
-  #menu * {
+  #group-selector,
+  #cbl-group-selector,
+  #date-selector {
+    font-size: 5vw;
+  }
+  .previous-and-next {
+    font-size: 30px;
+  }
+  #popup button {
     font-size: 5vw;
   }
   #menu {
@@ -218,7 +290,7 @@
     margin-bottom: 20px;
   }
   #date-selector {
-    width: 27vw;
+    width: 110px;
   }
   #group-menu {
     margin-right: 5px;
@@ -242,4 +314,50 @@
   .icon-question.active .hover-label {
     display: block; /* Display the label when the icon is clicked */
   }
+}
+
+/* popups */
+
+.cbl-popup-container,
+.popup-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  z-index: 9999;
+}
+
+.cbl-popup,
+.popup {
+  display: none;
+  background-color: #f9f9f9;
+  padding: 1.5%;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  transition: all 0.5s ease-in-out;
+  transform-origin: top left;
+}
+.cbl-popup.active,
+.popup.active {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  animation: appear 0.5s forwards;
+}
+@keyframes appear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.cbl-popup button,
+.popup button {
+  width: 80%;
+  margin: 6%;
+  display: block;
+  margin-top: 1.5vh;
 }

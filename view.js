@@ -77,7 +77,6 @@ export default class View {
   constructor() {
     this.addEventListeners();
     this.getLocalStorage();
-    this.renderDropdowns();
     this.handleResize();
   }
   renderViewDate(date) {
@@ -225,14 +224,18 @@ export default class View {
   }
 
   // function to handle group changes
-  handleGroupChange(selectedOption, id) {
-    if (id === "group-selector") {
+  selectGroup(selectedOption, id) {
+    if (id === "popup") {
       userGroup = selectedOption;
+      const popup = document.getElementById("popup");
+      popup.classList.toggle("active");
       persistGroup();
       this.updateTable();
     }
-    if (id === "cbl-group-selector") {
+    if (id === "cbl-popup") {
       userCblGroup = selectedOption;
+      const cblPopup = document.getElementById("cbl-popup");
+      cblPopup.classList.toggle("active");
       persistCblGroup();
       this.updateTable();
     }
@@ -278,29 +281,24 @@ export default class View {
         }
       });
     }
-    const handleGroupChange = this.handleGroupChange.bind(this);
+    const selectGroup = this.selectGroup.bind(this);
+    document.getElementById("popup").addEventListener("click", function (e) {
+      // Get the selected option
+      var id = this.id;
+      var selectedOption = e.target.textContent;
+      selectGroup(selectedOption, id);
+    });
+
     document
-      .getElementById("group-selector")
-      .addEventListener("change", function () {
+      .getElementById("cbl-popup")
+      .addEventListener("click", function (e) {
         // Get the selected option
         var id = this.id;
-        var selectedOption = this.value;
+        var selectedOption = e.target.textContent;
 
         // Call the function passing the selected option
         // You can replace the function name "handleGroupChange" with your own function name
-        handleGroupChange(selectedOption, id);
-      });
-
-    document
-      .getElementById("cbl-group-selector")
-      .addEventListener("change", function () {
-        // Get the selected option
-        var id = this.id;
-        var selectedOption = this.value;
-
-        // Call the function passing the selected option
-        // You can replace the function name "handleGroupChange" with your own function name
-        handleGroupChange(selectedOption, id);
+        selectGroup(selectedOption, id);
       });
     document.getElementById("previous").addEventListener("click", () => {
       changeDate("previous");
@@ -314,6 +312,16 @@ export default class View {
       changeDate("textEntry");
       this.updateTable();
     });
+    document
+      .getElementById("group-selector")
+      .addEventListener("click", function () {
+        document.getElementById("popup").classList.toggle("active");
+      });
+    document
+      .getElementById("cbl-group-selector")
+      .addEventListener("click", function () {
+        document.getElementById("cbl-popup").classList.toggle("active");
+      });
     window.addEventListener("resize", this.handleResize);
   }
 }
