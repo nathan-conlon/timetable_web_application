@@ -27,7 +27,7 @@
   margin-left: auto;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
 }
 
 /* GROUP SELECTORS */
@@ -200,6 +200,15 @@
   #master-container * {
     font-size: 3.4vw; /* Adjust the value as needed */
   }
+  #menu * {
+    font-size: 5vw;
+  }
+  #menu {
+    width: 96%;
+    margin-top: 2vh;
+    margin-left: 2%;
+    margin-right: 2%;
+  }
   #master-container {
     width: 95%;
     margin: 0;
@@ -209,7 +218,7 @@
     margin-bottom: 20px;
   }
   #date-selector {
-    width: 17vw;
+    width: 27vw;
   }
   #group-menu {
     margin-right: 5px;
