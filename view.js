@@ -77,6 +77,7 @@ export default class View {
   constructor() {
     this.addEventListeners();
     this.getLocalStorage();
+    this.applyLocalStorageInfo();
     this.handleResize();
   }
   renderViewDate(date) {
@@ -96,29 +97,12 @@ export default class View {
     userGroup = localStorage.getItem("userGroup") || "A01";
     userCblGroup = localStorage.getItem("userCblGroup") || "CBL01";
   }
-  renderDropdowns() {
+  applyLocalStorageInfo() {
     const groupSelector = document.getElementById("group-selector");
     const cblGroupSelector = document.getElementById("cbl-group-selector");
-    // Clear existing options
-    groupSelector.innerHTML = "";
-    cblGroupSelector.innerHTML = "";
-
-    // Add options for groups
-    groups.forEach((group) => {
-      const option = document.createElement("option");
-      option.text = group;
-      option.value = group;
-      groupSelector.appendChild(option);
-    });
-    // Add options for CBL groups
-    cblGroups.forEach((cblGroup) => {
-      const option = document.createElement("option");
-      option.text = cblGroup;
-      option.value = cblGroup;
-      cblGroupSelector.appendChild(option);
-    });
-    groupSelector.value = userGroup;
-    cblGroupSelector.value = userCblGroup;
+    groupSelector.innerHTML = userGroup + '<span style="float: right">></span>';
+    cblGroupSelector.innerHTML =
+      userCblGroup + '<span style="float: right">></span>';
   }
   // generate the HTML for the schedule table
   generateTable(data) {
@@ -230,6 +214,9 @@ export default class View {
       const popup = document.getElementById("popup");
       popup.classList.toggle("active");
       persistGroup();
+      const groupSelector = document.getElementById("group-selector");
+      groupSelector.innerHTML =
+        userGroup + '<span style="float: right">></span>';
       this.updateTable();
     }
     if (id === "cbl-popup") {
@@ -237,6 +224,9 @@ export default class View {
       const cblPopup = document.getElementById("cbl-popup");
       cblPopup.classList.toggle("active");
       persistCblGroup();
+      const cblGroupSelector = document.getElementById("cbl-group-selector");
+      cblGroupSelector.innerHTML =
+        userCblGroup + '<span style="float: right">></span>';
       this.updateTable();
     }
   }
@@ -286,7 +276,9 @@ export default class View {
       // Get the selected option
       var id = this.id;
       var selectedOption = e.target.textContent;
-      selectGroup(selectedOption, id);
+      // required formats for selected option
+      const format = /^[A-Z][0-9]{2}$/;
+      if (format.test(selectedOption)) selectGroup(selectedOption, id);
     });
 
     document
@@ -295,10 +287,9 @@ export default class View {
         // Get the selected option
         var id = this.id;
         var selectedOption = e.target.textContent;
-
-        // Call the function passing the selected option
-        // You can replace the function name "handleGroupChange" with your own function name
-        selectGroup(selectedOption, id);
+        // required formats for selected option
+        const cblFormat = /^[A-Z]{3}[0-9]{2}$/;
+        if (cblFormat.test(selectedOption)) selectGroup(selectedOption, id);
       });
     document.getElementById("previous").addEventListener("click", () => {
       changeDate("previous");

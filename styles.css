@@ -72,7 +72,13 @@ body {
 
 /* GROUP SELECTORS */
 
+#group-container {
+  display: flex;
+  flex-direction: column;
+}
+
 #group-menu {
+  flex: 1;
   margin-right: 20px;
   display: flex;
   flex-direction: row;
@@ -80,6 +86,7 @@ body {
 }
 
 #cbl-group-menu {
+  flex: 1;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -194,15 +201,15 @@ body {
 .icon-question {
   position: relative;
   display: inline-block;
-  width: 20px; /* Adjust size as needed */
-  height: 20px; /* Adjust size as needed */
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
   background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent background */
   border-radius: 50%;
   cursor: pointer;
 }
 .icon-question:before {
   content: "?";
-  font-size: 16px; /* Adjust size as needed */
+  font-size: 24px; /* Adjust size as needed */
   color: rgba(0, 0, 0, 0.5); /* Semi-transparent color */
   position: absolute;
   top: 50%;
@@ -261,6 +268,9 @@ body {
 
 /* Adjust font size for phones */
 @media only screen and (max-width: 480px) {
+  body {
+    margin: 0;
+  }
   #schedule * {
     font-size: 3.2vw; /* Adjust the value as needed */
   }
@@ -276,18 +286,22 @@ body {
     font-size: 5vw;
   }
   #menu {
-    width: 96%;
+    justify-content: center;
+    width: 100%;
     margin-top: 2vh;
-    margin-left: 2%;
-    margin-right: 2%;
   }
   #master-container {
-    width: 95%;
+    width: 100%;
     margin: 0;
-    padding: 5px;
+    margin-top: 4vh;
+    padding: 0;
   }
   #keys {
     margin-bottom: 20px;
+    width: 90%;
+  }
+  #schedule {
+    width: 90%;
   }
   #date-selector {
     width: 110px;
