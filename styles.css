@@ -4,6 +4,18 @@ body {
 
 /* MENU */
 
+#logo {
+  position: fixed;
+  top: 35px;
+  right: 7.5%;
+  height: 145px;
+  width: 128px;
+}
+
+#menu {
+  height: 190px;
+}
+
 #master-container {
   padding: 20px;
   display: block;
@@ -22,41 +34,51 @@ body {
 #group-selector,
 #cbl-group-selector,
 #date-selector {
-  font-size: 20px;
+  font-size: 18px;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 #schedule * {
+  color: #313639;
   font-size: 16px;
-}
-
-#menu {
-  display: flex;
-  flex-direction: row;
-  margin: 10px auto;
-  margin: auto;
-  width: 100%;
 }
 
 /* date menu */
 
 #date-menu-container {
+  height: 125px;
+  width: 120px;
+  position: fixed;
+  top: 35px;
+  left: 7.5%;
   background-color: #3498db;
   padding: 10px;
   border-radius: 20px;
-  margin-right: 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.date-buttons .previous-and-next {
+#date-buttons {
+  height: 78px;
+  align-self: center;
+}
+
+#date-buttons .previous-and-next {
   font-size: 50px;
   background-color: #3498db;
   color: white;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  width: 60px;
+  width: 50px;
+}
+
+#date-buttons .previous-and-next.clicked {
+  transform: scale(0.7);
 }
 
 #date-menu #date-selector {
@@ -64,10 +86,6 @@ body {
   border: none;
   border-radius: 10px;
   width: 110px;
-}
-
-.date-buttons {
-  align-self: center;
 }
 
 /* GROUP SELECTORS */
@@ -92,17 +110,111 @@ body {
   align-items: center;
 }
 
-#group-selector {
-  margin-bottom: 5px;
-  margin-right: 5px;
+#cbl-transformer,
+#transformer {
+  overflow: hidden;
   background-color: #3498db;
+  border-radius: 20px;
+  /* TRANSITIONS */
+  width: 120px;
+  max-height: 70px;
+  position: fixed;
+  top: 35px;
+  left: calc(7.5% + 147px);
+  transition: all 0.3s ease-in-out;
+}
+
+#cbl-transformer {
+  top: 110px;
+}
+
+#cbl-transformer.active,
+#transformer.active {
+  margin-bottom: 0;
+  margin-right: 0;
+  z-index: 9999;
+  /* TRANSITIONS */
+  top: 15%;
+  left: 32.5%;
+  position: fixed;
+  width: 35%;
+  max-height: 800px;
+}
+
+#cbl-transformer.active {
+  top: 20%;
+  left: 35%;
+  width: 30%;
+}
+
+/* popups */
+
+#cbl-popup,
+#popup {
+  background-color: #3498db;
+  padding: 1.5%;
+  opacity: 0;
+}
+#cbl-popup.active,
+#popup.active {
+  animation: fadeIn 0.5s forwards;
+  opacity: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  align-items: center;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  55% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#overlay {
+  display: none; /* Initially hidden */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  z-index: 9998; /* Ensure it's above everything else but the transformer */
+}
+
+#overlay.active {
+  display: block;
+}
+
+#cbl-popup button,
+#popup button {
+  cursor: pointer;
+  font-size: 18px;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: #313639;
+  text-align: center;
+  width: 100px;
+  height: 40px;
+  margin: 10px;
+  display: block;
+}
+
+#group-selector {
+  text-align: left;
+  cursor: pointer;
+  width: 120px;
   color: white;
-  padding: 20px 15px;
   border: none;
   border-radius: 20px;
-  cursor: pointer;
-  width: 140px;
-  text-align: left;
+  background-color: #3498db;
+  padding: 20px 15px;
 }
 
 #cbl-group-selector {
@@ -113,23 +225,26 @@ body {
   border: none;
   border-radius: 20px;
   cursor: pointer;
-  width: 140px;
+  width: 120px;
   text-align: left;
 }
 
 /* DATE SELECTOR */
 #date-selector {
+  align-self: center;
   color: #313639;
   margin-bottom: 3px;
   border: 0;
   padding: 8px;
   border-radius: 10px;
-  width: 140px;
+  width: 100px;
+  height: 29px;
   text-align: center;
 }
 
 /* SCHEDULE*/
 #keys {
+  color: #313639;
   display: flex;
   flex-direction: column;
   margin: auto;
@@ -145,9 +260,12 @@ body {
   width: 100%;
 }
 
+#keys,
+#schedule > * {
+  z-index: -100;
+}
 .timetable-container {
   margin-top: 10px;
-  margin-bottom: 10px;
   padding: 0.5%;
   width: 100%;
   display: flex;
@@ -156,8 +274,6 @@ body {
   align-items: center;
   box-sizing: border-box;
 }
-
-/* flexbox fade-in etc */
 
 .timetable-container {
   opacity: 0; /* Initially hide the containers */
@@ -199,13 +315,18 @@ body {
 
 /* Icon styles */
 .icon-question {
-  position: relative;
+  position: fixed;
+  top: 50px;
+  left: calc(7.5% + 275px);
   display: inline-block;
   width: 40px; /* Adjust size as needed */
   height: 40px; /* Adjust size as needed */
   background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent background */
   border-radius: 50%;
   cursor: pointer;
+}
+.cbl-q {
+  top: 126px;
 }
 .icon-question:before {
   content: "?";
@@ -235,26 +356,62 @@ body {
   display: block;
 }
 
-.date-buttons > .previous-and-next {
+#date-buttons > .previous-and-next {
   font-size: 50px;
+}
+
+@media only screen and (max-width: 1500px) {
+  #transformer.active {
+    left: 25%;
+    width: 50%;
+  }
+  #cbl-transformer.active {
+    left: 30%;
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  #cbl-transformer.active {
+    left: 20%;
+    width: 60%;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  #cbl-transformer.active,
+  #transformer.active {
+    left: 15%;
+    width: 70%;
+  }
 }
 
 /* Adjust font size for tablets (portrait) */
 @media only screen and (max-width: 768px) {
+  #logo {
+    display: none;
+  }
+  #cbl-transformer.active {
+    top: 15%;
+  }
+  #cbl-popup.active {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  #cbl-transformer.active,
+  #transformer.active {
+    left: 10%;
+    width: 80%;
+  }
+  #popup button,
+  cbl-popup button {
+    width: 80px;
+    margin: 7px;
+  }
   #schedule * {
     font-size: 16px; /* Adjust the value as needed */
   }
-  #group-selector,
-  #cbl-group-selector,
-  #date-selector {
-    font-size: 16px;
-  }
   .previous-and-next {
     font-size: 40px;
-  }
-  #date-selector {
-    width: 110px;
-    text-align: center;
   }
   .timetable-item:nth-child(1) {
     min-width: 4%;
@@ -272,39 +429,46 @@ body {
     margin: 0;
   }
   #schedule * {
-    font-size: 3.2vw; /* Adjust the value as needed */
+    font-size: 3.2vw;
   }
   #group-selector,
   #cbl-group-selector,
   #date-selector {
-    font-size: 5vw;
+    font-size: 18px;
   }
   .previous-and-next {
     font-size: 30px;
   }
+
+  #cbl-transformer.active,
+  #transformer.active {
+    left: 10%;
+    width: 80%;
+    max-height: 600px;
+  }
+
+  #cbl-popup button,
   #popup button {
-    font-size: 5vw;
+    width: 60px;
   }
   #menu {
     justify-content: center;
     width: 100%;
-    margin-top: 2vh;
   }
   #master-container {
     width: 100%;
     margin: 0;
-    margin-top: 4vh;
     padding: 0;
   }
   #keys {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     width: 90%;
   }
   #schedule {
     width: 90%;
   }
   #date-selector {
-    width: 110px;
+    width: 100px;
   }
   #group-menu {
     margin-right: 5px;
@@ -330,48 +494,22 @@ body {
   }
 }
 
-/* popups */
-
-.cbl-popup-container,
-.popup-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  z-index: 9999;
-}
-
-.cbl-popup,
-.popup {
-  display: none;
-  background-color: #f9f9f9;
-  padding: 1.5%;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  transition: all 0.5s ease-in-out;
-  transform-origin: top left;
-}
-.cbl-popup.active,
-.popup.active {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  animation: appear 0.5s forwards;
-}
-@keyframes appear {
-  0% {
-    transform: scale(0);
-    opacity: 0;
+@media only screen and (max-width: 480px) {
+  #cbl-popup button,
+  #popup button {
+    font-size: 16px;
+    width: 55px;
+    margin: 7px;
   }
-  100% {
-    transform: scale(1);
-    opacity: 1;
+  #cbl-popup button {
+    width: 70px;
+    margin: 8px;
   }
 }
-.cbl-popup button,
-.popup button {
-  width: 80%;
-  margin: 6%;
-  display: block;
-  margin-top: 1.5vh;
+
+@media only screen and (max-width: 380px) {
+  #popup button {
+    width: 50px;
+    margin: 4px;
+  }
 }

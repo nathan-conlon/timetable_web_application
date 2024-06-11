@@ -212,7 +212,6 @@ export default class View {
     if (id === "popup") {
       userGroup = selectedOption;
       const popup = document.getElementById("popup");
-      popup.classList.toggle("active");
       persistGroup();
       const groupSelector = document.getElementById("group-selector");
       groupSelector.innerHTML =
@@ -222,7 +221,6 @@ export default class View {
     if (id === "cbl-popup") {
       userCblGroup = selectedOption;
       const cblPopup = document.getElementById("cbl-popup");
-      cblPopup.classList.toggle("active");
       persistCblGroup();
       const cblGroupSelector = document.getElementById("cbl-group-selector");
       cblGroupSelector.innerHTML =
@@ -251,6 +249,22 @@ export default class View {
       }
     });
   }
+  handleDateClickVisual(e) {
+    if (e.target.id === "previous") {
+      const prevBtn = document.getElementById("previous");
+      prevBtn.classList.add("clicked");
+      setTimeout(function () {
+        prevBtn.classList.remove("clicked");
+      }, 150);
+    }
+    if (e.target.id === "next") {
+      const nextBtn = document.getElementById("next");
+      nextBtn.classList.add("clicked");
+      setTimeout(function () {
+        nextBtn.classList.remove("clicked");
+      }, 100);
+    }
+  }
   // add event listeners to dropdown menu
   addEventListeners() {
     if (window.innerWidth <= 480) {
@@ -278,7 +292,12 @@ export default class View {
       var selectedOption = e.target.textContent;
       // required formats for selected option
       const format = /^[A-Z][0-9]{2}$/;
-      if (format.test(selectedOption)) selectGroup(selectedOption, id);
+      if (format.test(selectedOption)) {
+        selectGroup(selectedOption, id);
+        document.getElementById("overlay").classList.toggle("active");
+        document.getElementById("transformer").classList.toggle("active");
+        document.getElementById("popup").classList.toggle("active");
+      }
     });
 
     document
@@ -289,7 +308,12 @@ export default class View {
         var selectedOption = e.target.textContent;
         // required formats for selected option
         const cblFormat = /^[A-Z]{3}[0-9]{2}$/;
-        if (cblFormat.test(selectedOption)) selectGroup(selectedOption, id);
+        if (cblFormat.test(selectedOption)) {
+          selectGroup(selectedOption, id);
+          document.getElementById("overlay").classList.toggle("active");
+          document.getElementById("cbl-transformer").classList.toggle("active");
+          document.getElementById("cbl-popup").classList.toggle("active");
+        }
       });
     document.getElementById("previous").addEventListener("click", () => {
       changeDate("previous");
@@ -306,13 +330,20 @@ export default class View {
     document
       .getElementById("group-selector")
       .addEventListener("click", function () {
+        document.getElementById("overlay").classList.toggle("active");
+        document.getElementById("transformer").classList.toggle("active");
         document.getElementById("popup").classList.toggle("active");
       });
     document
       .getElementById("cbl-group-selector")
       .addEventListener("click", function () {
+        document.getElementById("overlay").classList.toggle("active");
+        document.getElementById("cbl-transformer").classList.toggle("active");
         document.getElementById("cbl-popup").classList.toggle("active");
       });
+    document.getElementById("date-buttons").addEventListener("click", (e) => {
+      this.handleDateClickVisual(e);
+    });
     window.addEventListener("resize", this.handleResize);
   }
 }
