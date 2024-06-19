@@ -243,6 +243,7 @@ async function getFormattedTimetable() {
 
     return entry; // Return the modified entry
   });
+  console.log(formattedTimetable);
   return formattedTimetable;
 }
 

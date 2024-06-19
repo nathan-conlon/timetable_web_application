@@ -79,6 +79,7 @@ export default class View {
     this.getLocalStorage();
     this.applyLocalStorageInfo();
     this.handleResize();
+    this.adjustImageOpacity();
   }
   renderViewDate(date) {
     const dateSelector = document.getElementById("date-selector");
@@ -207,6 +208,22 @@ export default class View {
     });
   }
 
+  // function to dynamically control logo opacity
+
+  adjustImageOpacity() {
+    const image = document.getElementById("logo");
+    const maxViewportWidth = window.innerWidth; // Get the current viewport width
+    const minViewportWidth = 700; // Define the minimum viewport width for opacity scaling
+
+    if (maxViewportWidth > minViewportWidth) {
+      const newOpacity =
+        (maxViewportWidth - minViewportWidth) / maxViewportWidth;
+      image.style.opacity = newOpacity;
+    } else {
+      image.style.opacity = 0.0; // Set a minimum opacity when the viewport width is very small
+    }
+  }
+
   // function to handle group changes
   selectGroup(selectedOption, id) {
     if (id === "popup") {
@@ -216,6 +233,7 @@ export default class View {
       const groupSelector = document.getElementById("group-selector");
       groupSelector.innerHTML =
         userGroup + '<span style="float: right">></span>';
+      document.getElementById("group-selector").style.display = "block";
       this.updateTable();
     }
     if (id === "cbl-popup") {
@@ -225,15 +243,24 @@ export default class View {
       const cblGroupSelector = document.getElementById("cbl-group-selector");
       cblGroupSelector.innerHTML =
         userCblGroup + '<span style="float: right">></span>';
+      document.getElementById("cbl-group-selector").style.display = "block";
       this.updateTable();
     }
   }
   handleResize() {
+    var overlay = document.getElementById("overlay");
+    overlay.classList.remove("active");
     var iconQuestions = document.getElementsByClassName("icon-question");
     Array.from(iconQuestions).forEach((q) => q.classList.remove("active"));
     const timetableContainers = document.querySelectorAll(
       ".timetable-container"
     );
+    document.getElementById("cbl-transformer").classList.remove("active");
+    document.getElementById("transformer").classList.remove("active");
+    document.getElementById("popup").classList.remove("active");
+    document.getElementById("cbl-popup").classList.remove("active");
+    document.getElementById("group-selector").style.display = "block";
+    document.getElementById("cbl-group-selector").style.display = "block";
 
     timetableContainers.forEach((container) => {
       const children = container.children;
@@ -267,24 +294,38 @@ export default class View {
   }
   // add event listeners to dropdown menu
   addEventListeners() {
-    if (window.innerWidth <= 480) {
+    function updateEventListeners() {
       var groupContainer = document.getElementById("group-container");
-      groupContainer.addEventListener("click", function (e) {
-        if (e.target.classList.contains("icon-question")) {
-          e.target.classList.toggle("active");
 
-          // Get all elements inside groupContainer
-          var elements = groupContainer.querySelectorAll(".icon-question");
-
-          // Iterate through each element and remove 'active' class except for e.target
-          elements.forEach(function (element) {
-            if (element !== e.target && element.classList.contains("active")) {
-              element.classList.remove("active");
-            }
-          });
-        }
-      });
+      if (window.innerWidth <= 768) {
+        groupContainer.addEventListener("click", handleClick);
+      } else {
+        groupContainer.removeEventListener("click", handleClick);
+      }
     }
+
+    // Define the event handler function separately
+    function handleClick(e) {
+      if (e.target.classList.contains("icon-question")) {
+        document.getElementById("overlay").classList.toggle("active");
+        e.target.classList.toggle("active");
+
+        // Get all elements inside groupContainer
+        var elements = groupContainer.querySelectorAll(".icon-question");
+
+        // Iterate through each element and remove 'active' class except for e.target
+        elements.forEach(function (element) {
+          if (element !== e.target && element.classList.contains("active")) {
+            element.classList.remove("active");
+          }
+        });
+      }
+    }
+    // Initial check and setup
+    updateEventListeners();
+    // Update event listeners on window resize
+    window.addEventListener("resize", updateEventListeners);
+
     const selectGroup = this.selectGroup.bind(this);
     document.getElementById("popup").addEventListener("click", function (e) {
       // Get the selected option
@@ -332,6 +373,7 @@ export default class View {
       .addEventListener("click", function () {
         document.getElementById("overlay").classList.toggle("active");
         document.getElementById("transformer").classList.toggle("active");
+        document.getElementById("group-selector").style.display = "none";
         document.getElementById("popup").classList.toggle("active");
       });
     document
@@ -339,12 +381,30 @@ export default class View {
       .addEventListener("click", function () {
         document.getElementById("overlay").classList.toggle("active");
         document.getElementById("cbl-transformer").classList.toggle("active");
+        document.getElementById("cbl-group-selector").style.display = "none";
         document.getElementById("cbl-popup").classList.toggle("active");
       });
     document.getElementById("date-buttons").addEventListener("click", (e) => {
       this.handleDateClickVisual(e);
     });
+    document.addEventListener("DOMContentLoaded", function () {
+      const closeBtn = document.querySelector(".close");
+      const iconQuestion = document.querySelector(".q");
+      closeBtn.addEventListener("click", function () {
+        iconQuestion.classList.toggle("active");
+        document.getElementById("overlay").classList.toggle("active");
+      });
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+      const closeBtn = document.querySelector(".cbl-close");
+      const iconQuestion = document.querySelector(".cbl-q");
+      closeBtn.addEventListener("click", function () {
+        iconQuestion.classList.toggle("active");
+        document.getElementById("overlay").classList.toggle("active");
+      });
+    });
     window.addEventListener("resize", this.handleResize);
+    window.addEventListener("resize", this.adjustImageOpacity);
   }
 }
 

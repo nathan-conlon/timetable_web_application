@@ -132,7 +132,7 @@ body {
 #transformer.active {
   margin-bottom: 0;
   margin-right: 0;
-  z-index: 9999;
+  z-index: 10002;
   /* TRANSITIONS */
   top: 15%;
   left: 32.5%;
@@ -143,8 +143,8 @@ body {
 
 #cbl-transformer.active {
   top: 20%;
-  left: 35%;
-  width: 30%;
+  left: 30%;
+  width: 40%;
 }
 
 /* popups */
@@ -152,7 +152,7 @@ body {
 #cbl-popup,
 #popup {
   background-color: #3498db;
-  padding: 1.5%;
+  padding: 3.5%;
   opacity: 0;
 }
 #cbl-popup.active,
@@ -324,6 +324,7 @@ body {
   background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent background */
   border-radius: 50%;
   cursor: pointer;
+  z-index: 10001;
 }
 .cbl-q {
   top: 126px;
@@ -341,18 +342,26 @@ body {
 /* Hover label styles */
 .hover-label {
   display: none;
-  position: absolute;
+  position: fixed;
   background-color: rgba(255, 255, 255, 0.95);
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  z-index: 1;
-  top: 2vw;
-  left: 0vw;
+  z-index: 10001;
+  top: 47px;
+  left: calc(7.5% + 330px);
   width: auto;
   white-space: nowrap;
 }
+.hover-label .close-btn {
+  display: none;
+}
+
+.cbl-hover-label {
+  top: 124px;
+}
 .icon-question:hover .hover-label {
+  animation: fadeIn 0.3s forwards;
   display: block;
 }
 
@@ -362,8 +371,8 @@ body {
 
 @media only screen and (max-width: 1500px) {
   #transformer.active {
-    left: 25%;
-    width: 50%;
+    left: 26%;
+    width: 48%;
   }
   #cbl-transformer.active {
     left: 30%;
@@ -373,8 +382,8 @@ body {
 
 @media only screen and (max-width: 1300px) {
   #cbl-transformer.active {
-    left: 20%;
-    width: 60%;
+    left: 25%;
+    width: 50%;
   }
 }
 
@@ -388,8 +397,8 @@ body {
 
 /* Adjust font size for tablets (portrait) */
 @media only screen and (max-width: 768px) {
-  #logo {
-    display: none;
+  #master-container {
+    width: 95%;
   }
   #cbl-transformer.active {
     top: 15%;
@@ -399,8 +408,12 @@ body {
   }
   #cbl-transformer.active,
   #transformer.active {
-    left: 10%;
+    left: 7.5%;
+    width: 85%;
+  }
+  #cbl-transformer.active {
     width: 80%;
+    left: 10%;
   }
   #popup button,
   cbl-popup button {
@@ -408,7 +421,7 @@ body {
     margin: 7px;
   }
   #schedule * {
-    font-size: 16px; /* Adjust the value as needed */
+    font-size: 13px; /* Adjust the value as needed */
   }
   .previous-and-next {
     font-size: 40px;
@@ -416,6 +429,63 @@ body {
   .timetable-item:nth-child(1) {
     min-width: 4%;
     max-width: 7%;
+  }
+  .timetable-item:nth-child(3) {
+    min-width: 16%;
+    max-width: 22%;
+  }
+  .icon-question:hover .hover-label {
+    display: none;
+  }
+  .hover-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    text-align: center;
+    border: 2px solid #3498db;
+    white-space: wrap;
+    position: fixed;
+    width: 70vw;
+    max-width: 300px;
+    height: 20vw;
+    max-height: 80px;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none; /* Initially hide the label */
+  }
+  .icon-question.active .hover-label {
+    animation: fadeIn 0.3s forwards;
+    cursor: default;
+    display: flex; /* Display the label when the icon is clicked */
+  }
+  .hover-label .close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -10px;
+    right: -10px;
+    height: 20px;
+    width: 20px;
+    display: block;
+    position: absolute;
+    cursor: pointer;
+    font-size: 28px;
+    color: white;
+    background-color: #3498db;
+    border-radius: 20px;
+    border: none;
+    padding: 8px;
+    line-height: 22.5px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .timetable-item:nth-child(1) {
+    min-width: 4%;
+    max-width: 5%;
   }
   .timetable-item:nth-child(3) {
     min-width: 16%;
@@ -429,7 +499,7 @@ body {
     margin: 0;
   }
   #schedule * {
-    font-size: 3.2vw;
+    font-size: 2.8vw;
   }
   #group-selector,
   #cbl-group-selector,
@@ -479,19 +549,6 @@ body {
   #cbl-group-selector {
     margin-right: 5px;
   }
-  .icon-question:hover .hover-label {
-    display: none;
-  }
-  .hover-label {
-    white-space: wrap;
-    width: 30vw;
-    top: 6vw;
-    left: 0vw;
-    display: none; /* Initially hide the label */
-  }
-  .icon-question.active .hover-label {
-    display: block; /* Display the label when the icon is clicked */
-  }
 }
 
 @media only screen and (max-width: 480px) {
@@ -511,5 +568,9 @@ body {
   #popup button {
     width: 50px;
     margin: 4px;
+  }
+  #cbl-popup button {
+    width: 70px;
+    margin: 6px;
   }
 }
