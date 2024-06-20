@@ -261,6 +261,8 @@ export default class View {
     document.getElementById("cbl-popup").classList.remove("active");
     document.getElementById("group-selector").style.display = "block";
     document.getElementById("cbl-group-selector").style.display = "block";
+    document.getElementById("popup-header").classList.remove("active");
+    document.getElementById("cbl-popup-header").classList.remove("active");
 
     timetableContainers.forEach((container) => {
       const children = container.children;
@@ -338,6 +340,7 @@ export default class View {
         document.getElementById("overlay").classList.toggle("active");
         document.getElementById("transformer").classList.toggle("active");
         document.getElementById("popup").classList.toggle("active");
+        document.getElementById("popup-header").classList.toggle("active");
       }
     });
 
@@ -354,6 +357,9 @@ export default class View {
           document.getElementById("overlay").classList.toggle("active");
           document.getElementById("cbl-transformer").classList.toggle("active");
           document.getElementById("cbl-popup").classList.toggle("active");
+          document
+            .getElementById("cbl-popup-header")
+            .classList.toggle("active");
         }
       });
     document.getElementById("previous").addEventListener("click", () => {
@@ -373,6 +379,7 @@ export default class View {
       .addEventListener("click", function () {
         document.getElementById("overlay").classList.toggle("active");
         document.getElementById("transformer").classList.toggle("active");
+        document.getElementById("popup-header").classList.toggle("active");
         document.getElementById("group-selector").style.display = "none";
         document.getElementById("popup").classList.toggle("active");
       });
@@ -381,6 +388,7 @@ export default class View {
       .addEventListener("click", function () {
         document.getElementById("overlay").classList.toggle("active");
         document.getElementById("cbl-transformer").classList.toggle("active");
+        document.getElementById("cbl-popup-header").classList.toggle("active");
         document.getElementById("cbl-group-selector").style.display = "none";
         document.getElementById("cbl-popup").classList.toggle("active");
       });

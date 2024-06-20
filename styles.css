@@ -155,6 +155,20 @@ body {
   padding: 3.5%;
   opacity: 0;
 }
+
+#popup-header,
+#cbl-popup-header {
+  text-align: center;
+  font-size: 18px;
+  color: white;
+  margin-top: 20px;
+  display: none;
+  animation: fadeIn 0.5s forwards;
+}
+#popup-header.active,
+#cbl-popup-header.active {
+  display: block;
+}
 #cbl-popup.active,
 #popup.active {
   animation: fadeIn 0.5s forwards;
