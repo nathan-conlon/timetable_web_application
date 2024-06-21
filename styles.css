@@ -27,7 +27,7 @@
   margin-left: auto;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
 }
 
 /* GROUP SELECTORS */
