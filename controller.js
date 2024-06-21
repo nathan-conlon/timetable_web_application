@@ -28,6 +28,7 @@ async function getTableHTML() {
 getTableHTML().then((tableHTML) => {
   view.renderTable(tableHTML);
   view.renderViewDate(dateInfo.currentDate);
+  view.handleResize();
 });
 
 function changeDate(direction) {

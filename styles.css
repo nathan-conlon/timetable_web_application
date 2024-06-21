@@ -1,40 +1,115 @@
+body {
+  padding: 0;
+}
+
 /* MENU */
 
-#master-container {
-  padding: 20px;
+#logo {
+  position: fixed;
+  top: 35px;
+  right: 7.5%;
+  height: 145px;
+  width: 128px;
+}
+
+#menu {
+  height: 190px;
+}
+
+#buttons-container {
+  width: 340px;
+  height: 100%;
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 7px;
+  left: 7.5%;
+}
+
+#master-container {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   flex-direction: column;
-  margin: auto;
-  width: 90%;
+  align-items: center;
+  width: 85%;
 }
 
 #master-container * {
-  font-size: 20px;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-style: normal;
 }
-
-#menu {
-  display: flex;
-  flex-direction: row;
-  margin: 10px auto;
-  margin: auto;
+#group-selector,
+#cbl-group-selector,
+#date-selector {
+  font-size: 18px;
   width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
-#date-menu {
-  margin-left: auto;
+#schedule * {
+  color: #313639;
+  font-size: 16px;
+}
+
+/* date menu */
+
+#date-menu-container {
+  height: 125px;
+  width: 120px;
+  position: relative;
+  top: 35px;
+  background-color: #3498db;
+  padding: 10px;
+  border-radius: 20px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
+}
+
+#date-buttons {
+  height: 78px;
+  align-self: center;
+}
+
+#date-buttons .previous-and-next {
+  font-size: 50px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 50px;
+}
+
+#date-buttons .previous-and-next.clicked {
+  transform: scale(0.7);
+}
+
+#date-menu #date-selector {
+  padding: 10px 5px;
+  border: none;
+  border-radius: 10px;
+  width: 110px;
 }
 
 /* GROUP SELECTORS */
 
+#group-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 140px;
+  width: 180px;
+  top: 35px;
+}
+
 #group-menu {
-  padding: 2px;
-  border: 2px;
+  height: 70px;
+  flex: 1;
   margin-right: 20px;
   display: flex;
   flex-direction: row;
@@ -42,29 +117,163 @@
 }
 
 #cbl-group-menu {
-  padding: 2px;
-  border: 2px;
+  height: 70px;
+  flex: 1;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
+#cbl-transformer,
+#transformer {
+  overflow: hidden;
+  background-color: #3498db;
+  border-radius: 20px;
+  /* TRANSITIONS */
+  width: 120px;
+  max-height: 70px;
+  position: absolute;
+  top: 0px;
+  transition: all 0.3s ease-in-out;
+}
+
+#cbl-transformer {
+  top: 75px;
+}
+
+#cbl-transformer.active,
+#transformer.active {
+  margin-bottom: 0;
+  margin-right: 0;
+  z-index: 10002;
+  /* TRANSITIONS */
+  top: 15%;
+  left: 32.5%;
+  position: fixed;
+  width: 35%;
+  max-height: 800px;
+}
+
+#cbl-transformer.active {
+  top: 20%;
+  left: 30%;
+  width: 40%;
+}
+
+/* popups */
+
+#cbl-popup,
+#popup {
+  background-color: #3498db;
+  padding: 3.5%;
+  opacity: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+#popup-header,
+#cbl-popup-header {
+  display: none;
+  text-align: center;
+  font-size: 18px;
+  color: white;
+  margin-top: 20px;
+  animation: fadeIn 0.5s forwards;
+}
+#popup-header.active,
+#cbl-popup-header.active {
+  display: block;
+}
+#cbl-popup.active,
+#popup.active {
+  animation: fadeIn 0.5s forwards;
+  opacity: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  align-items: center;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  55% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#overlay {
+  display: none; /* Initially hidden */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  z-index: 9998; /* Ensure it's above everything else but the transformer */
+}
+
+#overlay.active {
+  display: block;
+}
+
+#cbl-popup button,
+#popup button {
+  cursor: pointer;
+  font-size: 18px;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: #313639;
+  text-align: center;
+  width: 100px;
+  height: 40px;
+  margin: 10px;
+  display: block;
+}
+
 #group-selector {
-  margin-right: 5px;
+  text-align: left;
+  cursor: pointer;
+  width: 120px;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  background-color: #3498db;
+  padding: 20px 15px;
 }
 
 #cbl-group-selector {
   margin-right: 5px;
+  background-color: #3498db;
+  color: white;
+  padding: 20px 15px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 120px;
+  text-align: left;
 }
 
 /* DATE SELECTOR */
 #date-selector {
-  width: 160px;
+  align-self: center;
+  color: #313639;
+  margin-bottom: 3px;
+  border: 0;
+  padding: 8px;
+  border-radius: 10px;
+  width: 100px;
+  height: 29px;
   text-align: center;
 }
 
 /* SCHEDULE*/
 #keys {
+  color: #313639;
   display: flex;
   flex-direction: column;
   margin: auto;
@@ -80,9 +289,12 @@
   width: 100%;
 }
 
+#keys,
+#schedule > * {
+  z-index: -100;
+}
 .timetable-container {
   margin-top: 10px;
-  margin-bottom: 10px;
   padding: 0.5%;
   width: 100%;
   display: flex;
@@ -91,8 +303,6 @@
   align-items: center;
   box-sizing: border-box;
 }
-
-/* flexbox fade-in etc */
 
 .timetable-container {
   opacity: 0; /* Initially hide the containers */
@@ -119,11 +329,11 @@
 }
 
 .timetable-item:nth-child(3) {
-  width: 14%;
+  width: 18%;
 }
 
 .timetable-item:nth-child(4) {
-  width: 23%;
+  width: 19%;
 }
 
 .timetable-item:nth-child(5) {
@@ -134,17 +344,23 @@
 
 /* Icon styles */
 .icon-question {
-  position: relative;
+  position: absolute;
+  top: 10px;
+  left: 130px;
   display: inline-block;
-  width: 20px; /* Adjust size as needed */
-  height: 20px; /* Adjust size as needed */
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
   background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent background */
   border-radius: 50%;
   cursor: pointer;
+  z-index: 10000;
+}
+.cbl-q {
+  top: 87px;
 }
 .icon-question:before {
   content: "?";
-  font-size: 16px; /* Adjust size as needed */
+  font-size: 24px; /* Adjust size as needed */
   color: rgba(0, 0, 0, 0.5); /* Semi-transparent color */
   position: absolute;
   top: 50%;
@@ -155,35 +371,89 @@
 /* Hover label styles */
 .hover-label {
   display: none;
-  position: absolute;
+  position: fixed;
   background-color: rgba(255, 255, 255, 0.95);
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  z-index: 1;
-  top: 2vw;
-  left: 0vw;
+  z-index: 10001;
+  top: 53px;
+  left: calc(7.5% + 338px);
   width: auto;
   white-space: nowrap;
 }
+.hover-label .close-btn {
+  display: none;
+}
+
+.cbl-hover-label {
+  top: 124px;
+}
 .icon-question:hover .hover-label {
+  animation: fadeIn 0.3s forwards;
   display: block;
 }
 
-@media only screen and (max-width: 1224px) {
-  #master-container * {
-    font-size: 16px;
+#date-buttons > .previous-and-next {
+  font-size: 50px;
+}
+
+@media only screen and (max-width: 1500px) {
+  #transformer.active {
+    left: 26%;
+    width: 48%;
+  }
+  #cbl-transformer.active {
+    left: 30%;
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  #cbl-transformer.active {
+    left: 25%;
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  #cbl-transformer.active,
+  #transformer.active {
+    left: 15%;
+    width: 70%;
   }
 }
 
 /* Adjust font size for tablets (portrait) */
 @media only screen and (max-width: 768px) {
-  #master-container * {
-    font-size: 16px; /* Adjust the value as needed */
+  #master-container {
+    width: 95%;
   }
-  #date-selector {
-    width: 120px;
-    text-align: center;
+  #cbl-transformer.active {
+    top: 15%;
+  }
+  #cbl-popup.active {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  #cbl-transformer.active,
+  #transformer.active {
+    left: 7.5%;
+    width: 85%;
+  }
+  #cbl-transformer.active {
+    width: 80%;
+    left: 10%;
+  }
+  #popup button,
+  cbl-popup button {
+    width: 80px;
+    margin: 7px;
+  }
+  #schedule * {
+    font-size: 13px; /* Adjust the value as needed */
+  }
+  .previous-and-next {
+    font-size: 40px;
   }
   .timetable-item:nth-child(1) {
     min-width: 4%;
@@ -193,23 +463,111 @@
     min-width: 16%;
     max-width: 22%;
   }
+  .icon-question:hover .hover-label {
+    display: none;
+  }
+  .hover-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    text-align: center;
+    border: 2px solid #3498db;
+    white-space: wrap;
+    position: fixed;
+    width: 70vw;
+    max-width: 300px;
+    height: 20vw;
+    max-height: 80px;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none; /* Initially hide the label */
+  }
+  .icon-question.active .hover-label {
+    animation: fadeIn 0.3s forwards;
+    cursor: default;
+    display: flex; /* Display the label when the icon is clicked */
+  }
+  .hover-label .close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -10px;
+    right: -10px;
+    height: 20px;
+    width: 20px;
+    display: block;
+    position: absolute;
+    cursor: pointer;
+    font-size: 28px;
+    color: white;
+    background-color: #3498db;
+    border-radius: 20px;
+    border: none;
+    padding: 8px;
+    line-height: 22.5px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .timetable-item:nth-child(1) {
+    min-width: 4%;
+    max-width: 5%;
+  }
+  .timetable-item:nth-child(3) {
+    min-width: 16%;
+    max-width: 22%;
+  }
 }
 
 /* Adjust font size for phones */
 @media only screen and (max-width: 480px) {
-  #master-container * {
-    font-size: 3.4vw; /* Adjust the value as needed */
+  body {
+    margin: 0;
+  }
+  #schedule * {
+    font-size: 2.8vw;
+  }
+  #group-selector,
+  #cbl-group-selector,
+  #date-selector {
+    font-size: 18px;
+  }
+  .previous-and-next {
+    font-size: 30px;
+  }
+
+  #cbl-transformer.active,
+  #transformer.active {
+    left: 10%;
+    width: 80%;
+    max-height: 600px;
+  }
+
+  #cbl-popup button,
+  #popup button {
+    width: 60px;
+  }
+  #menu {
+    justify-content: center;
+    width: 100%;
   }
   #master-container {
-    width: 95%;
+    width: 100%;
     margin: 0;
-    padding: 5px;
+    padding: 0;
   }
   #keys {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    width: 90%;
+  }
+  #schedule {
+    width: 90%;
   }
   #date-selector {
-    width: 17vw;
+    width: 100px;
   }
   #group-menu {
     margin-right: 5px;
@@ -220,17 +578,83 @@
   #cbl-group-selector {
     margin-right: 5px;
   }
-  .icon-question:hover .hover-label {
+}
+
+@media screen and (max-width: 480px) {
+  .icon-question {
+    z-index: 10001;
+    position: relative;
+    left: 0;
+    top: 0;
+    margin-left: 7px;
+  }
+  #logo {
     display: none;
   }
-  .hover-label {
-    white-space: wrap;
-    width: 30vw;
-    top: 6vw;
-    left: 0vw;
-    display: none; /* Initially hide the label */
+
+  .transformer-filler {
+    position: static;
+    width: 120px;
+    height: 70px;
+    z-index: -8;
   }
-  .icon-question.active .hover-label {
-    display: block; /* Display the label when the icon is clicked */
+  #transformer,
+  #cbl-transformer,
+  #date-menu-container {
+    position: absolute;
+    left: 0;
+  }
+  #transformer,
+  #cbl-transformer {
+    top: 0;
+    gap: 5px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  #cbl-transformer {
+    top: 75px;
+  }
+
+  #transformer.active,
+  #cbl-transformer.active {
+    position: absolute;
+    top: 10vh;
+    left: -36vw;
+    width: 80vw;
+  }
+
+  #date-menu-container {
+    position: relative;
+  }
+
+  #menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  #cbl-popup button,
+  #popup button {
+    font-size: 16px;
+    width: 55px;
+    margin: 7px;
+  }
+  #cbl-popup button {
+    width: 70px;
+    margin: 8px;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  #popup button {
+    width: 50px;
+    margin: 4px;
+  }
+  #cbl-popup button {
+    width: 70px;
+    margin: 6px;
   }
 }
