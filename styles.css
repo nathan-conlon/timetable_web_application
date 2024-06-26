@@ -1,5 +1,6 @@
 body {
   padding: 0;
+  margin: 0;
 }
 
 /* MENU */
@@ -17,13 +18,12 @@ body {
 }
 
 #buttons-container {
-  width: 340px;
+  width: 315px;
   height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 7px;
-  left: 7.5%;
 }
 
 #master-container {
@@ -102,8 +102,8 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 140px;
-  width: 180px;
+  height: 145px;
+  width: 170px;
   top: 35px;
 }
 
@@ -126,6 +126,7 @@ body {
 
 #cbl-transformer,
 #transformer {
+  z-index: 3;
   overflow: hidden;
   background-color: #3498db;
   border-radius: 20px;
@@ -133,7 +134,8 @@ body {
   width: 120px;
   max-height: 70px;
   position: absolute;
-  top: 0px;
+  top: 0vh;
+  left: calc(0vw - 0px);
   transition: all 0.3s ease-in-out;
 }
 
@@ -145,19 +147,18 @@ body {
 #transformer.active {
   margin-bottom: 0;
   margin-right: 0;
-  z-index: 10002;
+  z-index: 5;
   /* TRANSITIONS */
-  top: 15%;
-  left: 32.5%;
-  position: fixed;
-  width: 35%;
-  max-height: 800px;
+  top: calc(-323.5px + 50vh);
+  left: calc(42.5vw - 410px);
+  position: absolute;
+  width: 526px;
+  max-height: 577px;
 }
 
 #cbl-transformer.active {
-  top: 20%;
-  left: 30%;
-  width: 40%;
+  max-height: 550px;
+  top: calc(-298px + 50vh);
 }
 
 /* popups */
@@ -173,20 +174,23 @@ body {
 
 #popup-header,
 #cbl-popup-header {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 60px;
   display: none;
   text-align: center;
   font-size: 18px;
   color: white;
-  margin-top: 20px;
-  animation: fadeIn 0.5s forwards;
+  animation: fadeIn 0.6s forwards;
 }
 #popup-header.active,
 #cbl-popup-header.active {
-  display: block;
+  display: flex;
 }
 #cbl-popup.active,
 #popup.active {
-  animation: fadeIn 0.5s forwards;
+  animation: fadeIn 0.7s forwards;
   opacity: 1;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -198,7 +202,7 @@ body {
   0% {
     opacity: 0;
   }
-  55% {
+  45% {
     opacity: 0;
   }
   100% {
@@ -214,7 +218,7 @@ body {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
-  z-index: 9998; /* Ensure it's above everything else but the transformer */
+  z-index: 4; /* Ensure it's above everything else but the transformer */
 }
 
 #overlay.active {
@@ -289,10 +293,6 @@ body {
   width: 100%;
 }
 
-#keys,
-#schedule > * {
-  z-index: -100;
-}
 .timetable-container {
   margin-top: 10px;
   padding: 0.5%;
@@ -353,12 +353,13 @@ body {
   background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent background */
   border-radius: 50%;
   cursor: pointer;
-  z-index: 10000;
+  z-index: 1;
 }
 .cbl-q {
   top: 87px;
 }
 .icon-question:before {
+  z-index: 1;
   content: "?";
   font-size: 24px; /* Adjust size as needed */
   color: rgba(0, 0, 0, 0.5); /* Semi-transparent color */
@@ -376,9 +377,9 @@ body {
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  z-index: 10001;
-  top: 53px;
-  left: calc(7.5% + 338px);
+  z-index: 6;
+  top: 43px;
+  left: calc(7.5% + 330px);
   width: auto;
   white-space: nowrap;
 }
@@ -398,56 +399,21 @@ body {
   font-size: 50px;
 }
 
-@media only screen and (max-width: 1500px) {
-  #transformer.active {
-    left: 26%;
-    width: 48%;
-  }
-  #cbl-transformer.active {
-    left: 30%;
-    width: 40%;
-  }
-}
-
-@media only screen and (max-width: 1300px) {
-  #cbl-transformer.active {
-    left: 25%;
-    width: 50%;
-  }
-}
-
-@media only screen and (max-width: 1100px) {
-  #cbl-transformer.active,
-  #transformer.active {
-    left: 15%;
-    width: 70%;
-  }
-}
-
 /* Adjust font size for tablets (portrait) */
 @media only screen and (max-width: 768px) {
   #master-container {
     width: 95%;
   }
-  #cbl-transformer.active {
-    top: 15%;
-  }
-  #cbl-popup.active {
-    grid-template-columns: repeat(3, 1fr);
-  }
   #cbl-transformer.active,
   #transformer.active {
-    left: 7.5%;
-    width: 85%;
+    top: calc(-210px + 37vh);
+    width: 75vw;
+    left: calc(10vw - 147px);
   }
-  #cbl-transformer.active {
-    width: 80%;
-    left: 10%;
-  }
-  #popup button,
-  cbl-popup button {
-    width: 80px;
-    margin: 7px;
+  #cbl-popup button,
+  #popup button {
+    width: 15vw;
+    margin: 1vw;
   }
   #schedule * {
     font-size: 13px; /* Adjust the value as needed */
@@ -485,7 +451,11 @@ body {
     transform: translate(-50%, -50%);
     display: none; /* Initially hide the label */
   }
+  .icon-question.active {
+    z-index: 6;
+  }
   .icon-question.active .hover-label {
+    z-index: 6;
     animation: fadeIn 0.3s forwards;
     cursor: default;
     display: flex; /* Display the label when the icon is clicked */
@@ -543,12 +513,12 @@ body {
   #transformer.active {
     left: 10%;
     width: 80%;
-    max-height: 600px;
   }
-
-  #cbl-popup button,
-  #popup button {
-    width: 60px;
+  #cbl-popup.active {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  #cbl-popup button {
+    width: 18vw;
   }
   #menu {
     justify-content: center;
@@ -582,7 +552,6 @@ body {
 
 @media screen and (max-width: 480px) {
   .icon-question {
-    z-index: 10001;
     position: relative;
     left: 0;
     top: 0;
@@ -596,7 +565,7 @@ body {
     position: static;
     width: 120px;
     height: 70px;
-    z-index: -8;
+    z-index: 1;
   }
   #transformer,
   #cbl-transformer,
@@ -607,7 +576,7 @@ body {
   #transformer,
   #cbl-transformer {
     top: 0;
-    gap: 5px;
+    gap: 7px;
     transition: all 0.3s ease-in-out;
   }
 
@@ -618,9 +587,13 @@ body {
   #transformer.active,
   #cbl-transformer.active {
     position: absolute;
-    top: 10vh;
-    left: -36vw;
+    top: calc(-323.5px + 54vh);
+    left: calc(12.5px - 40vw);
     width: 80vw;
+  }
+
+  #cbl-transformer.active {
+    top: calc(-298px + 50vh);
   }
 
   #date-menu-container {
@@ -639,12 +612,6 @@ body {
   #cbl-popup button,
   #popup button {
     font-size: 16px;
-    width: 55px;
-    margin: 7px;
-  }
-  #cbl-popup button {
-    width: 70px;
-    margin: 8px;
   }
 }
 
@@ -655,6 +622,6 @@ body {
   }
   #cbl-popup button {
     width: 70px;
-    margin: 6px;
+    margin: 4px;
   }
 }
