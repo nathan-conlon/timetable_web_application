@@ -354,6 +354,7 @@ body {
   border: 2px solid #313639;
   cursor: pointer;
   z-index: 1;
+  background-color: rgb(144, 219, 244);
 }
 .cbl-q {
   top: 93px;
@@ -367,7 +368,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -47%);
-  font-weight: 900;
+  font-weight: 1000;
 }
 
 /* Hover label styles */
