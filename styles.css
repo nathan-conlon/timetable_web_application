@@ -136,7 +136,8 @@ body {
   position: absolute;
   top: 0vh;
   left: calc(0vw - 0px);
-  transition: all 0.3s ease-in-out;
+  transition: top 0.3s ease-in-out, left 0.3s ease-in-out,
+    max-height 0.3s ease-in-out, width 0.3s ease-in-out;
 }
 
 #cbl-transformer {
@@ -211,14 +212,14 @@ body {
 }
 
 #overlay {
-  display: none; /* Initially hidden */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
-  z-index: 4; /* Ensure it's above everything else but the transformer */
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 4;
 }
 
 #overlay.active {
@@ -363,6 +364,7 @@ body {
 }
 
 .question-i {
+  position: absolute;
   pointer-events: none;
   z-index: 1;
   font-size: 16px;
@@ -451,8 +453,9 @@ body {
     display: none; /* Initially hide the label */
   }
   .icon-question.active {
-    z-index: 6;
+    z-index: auto;
   }
+
   .icon-question.active .hover-label {
     z-index: 6;
     animation: fadeIn 0.3s forwards;
@@ -566,17 +569,21 @@ body {
     height: 70px;
     z-index: 1;
   }
+
+  /* TRANSFORMER TRANSITIONS */
   #transformer,
   #cbl-transformer,
   #date-menu-container {
     position: absolute;
-    left: 0;
   }
   #transformer,
   #cbl-transformer {
     top: 0;
+    left: 0;
     gap: 7px;
-    transition: all 0.3s ease-in-out;
+    transition: top 0.3s linear, left 0.3s linear, max-height 0.3s linear,
+      width 0.3s linear;
+    will-change: top, left, max-height, width;
   }
 
   #cbl-transformer {
@@ -593,7 +600,11 @@ body {
 
   #cbl-transformer.active {
     top: calc(-298px + 50vh);
+    left: calc(12.5px - 36vw);
+    width: 72vw;
   }
+
+  /* END OF TRANSFORMER TRANSITIONS */
 
   #date-menu-container {
     position: relative;
@@ -622,5 +633,9 @@ body {
   #cbl-popup button {
     width: 70px;
     margin: 4px;
+  }
+  #cbl-transformer.active {
+    width: 78vw;
+    left: calc(12.5px - 38vw);
   }
 }
