@@ -1,5 +1,5 @@
 "user strict";
-import View, { userGroup, userCblGroup } from "./View.js";
+import View, { userGroup, userCblGroup } from "./view.js";
 import {
   dateFilter,
   timetableFilter,
