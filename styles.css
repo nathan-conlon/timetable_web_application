@@ -138,6 +138,7 @@ body {
   left: calc(0vw - 0px);
   transition: top 0.3s ease-in-out, left 0.3s ease-in-out,
     max-height 0.3s ease-in-out, width 0.3s ease-in-out;
+  will-change: top, left, max-height, width;
 }
 
 #cbl-transformer {
@@ -155,6 +156,7 @@ body {
   position: absolute;
   width: 526px;
   max-height: 577px;
+  will-change: top, left, max-height, width;
 }
 
 #cbl-transformer.active {
@@ -596,6 +598,7 @@ body {
     top: calc(-323.5px + 54vh);
     left: calc(12.5px - 40vw);
     width: 80vw;
+    will-change: top, left, max-height, width;
   }
 
   #cbl-transformer.active {
