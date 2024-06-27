@@ -11,67 +11,6 @@ const persistCblGroup = function () {
   localStorage.setItem("userCblGroup", userCblGroup);
 };
 
-const groups = [
-  "A01",
-  "A02",
-  "A03",
-  "A04",
-  "A05",
-  "A06",
-  "A07",
-  "A08",
-  "A09",
-  "A10",
-  "A11",
-  "A12",
-  "A13",
-  "A14",
-  "A15",
-  "A16",
-  "B01",
-  "B02",
-  "B03",
-  "B04",
-  "B05",
-  "B06",
-  "B07",
-  "B08",
-  "B09",
-  "B10",
-  "B11",
-  "B12",
-  "B13",
-  "B14",
-  "B15",
-  "B16",
-];
-const cblGroups = [
-  "CBL01",
-  "CBL02",
-  "CBL03",
-  "CBL04",
-  "CBL05",
-  "CBL06",
-  "CBL07",
-  "CBL08",
-  "CBL09",
-  "CBL10",
-  "CBL11",
-  "CBL12",
-  "CBL13",
-  "CBL14",
-  "CBL15",
-  "CBL16",
-  "CBL17",
-  "CBL18",
-  "CBL19",
-  "CBL20",
-  "CBL21",
-  "CBL22",
-  "CBL23",
-  "CBL24",
-];
-
 export default class View {
   parentElement = document.getElementById("schedule");
   constructor() {
@@ -183,27 +122,22 @@ export default class View {
 
   applyColorCode() {
     let items = document.querySelectorAll(".timetable-container");
+    const colorMap = {
+      "Case Based Tutorial": "#fde4cf",
+      Lecture: "#90dbf4",
+      Practical: "#f1c0e8",
+      Tutorial: "#98f5e1",
+      Other: "#e5e5e5",
+      Workshop: "#ff8fa3",
+    };
+
     items.forEach((item) => {
-      let subject = item
-        .querySelectorAll(".timetable-item")[3]
-        .textContent.trim();
-      if (subject === "Case Based Tutorial") {
-        item.style.backgroundColor = "#fde4cf";
-      }
-      if (subject === "Lecture") {
-        item.style.backgroundColor = "#90dbf4";
-      }
-      if (subject === "Practical") {
-        item.style.backgroundColor = "#f1c0e8";
-      }
-      if (subject === "Tutorial") {
-        item.style.backgroundColor = "#98f5e1";
-      }
-      if (subject === "Other") {
-        item.style.backgroundColor = "#e5e5e5";
-      }
-      if (subject === "Workshop") {
-        item.style.backgroundColor = "#ff8fa3";
+      let subjectElement = item.querySelectorAll(".timetable-item")[3];
+      if (subjectElement) {
+        let subject = subjectElement.textContent.trim();
+        if (colorMap[subject]) {
+          item.style.backgroundColor = colorMap[subject];
+        }
       }
     });
   }
@@ -226,83 +160,94 @@ export default class View {
 
   // function to handle group changes
   selectGroup(selectedOption, id) {
+    let group, persistFunction, groupSelectorId;
     if (id === "popup") {
       userGroup = selectedOption;
-      const popup = document.getElementById("popup");
-      persistGroup();
-      const groupSelector = document.getElementById("group-selector");
-      groupSelector.innerHTML =
-        userGroup + '<span style="float: right">></span>';
-      document.getElementById("group-selector").style.display = "block";
-      this.updateTable();
-    }
-    if (id === "cbl-popup") {
+      group = userGroup;
+      persistFunction = persistGroup;
+      groupSelectorId = "group-selector";
+    } else if (id === "cbl-popup") {
       userCblGroup = selectedOption;
-      const cblPopup = document.getElementById("cbl-popup");
-      persistCblGroup();
-      const cblGroupSelector = document.getElementById("cbl-group-selector");
-      cblGroupSelector.innerHTML =
-        userCblGroup + '<span style="float: right">></span>';
-      document.getElementById("cbl-group-selector").style.display = "block";
-      this.updateTable();
+      group = userCblGroup;
+      persistFunction = persistCblGroup;
+      groupSelectorId = "cbl-group-selector";
+    } else {
+      return;
     }
+    persistFunction();
+    const groupSelector = document.getElementById(groupSelectorId);
+    groupSelector.innerHTML = group + '<span style="float: right">></span>';
+    groupSelector.style.display = "block";
+    this.updateTable();
   }
   handleResize() {
-    var overlay = document.getElementById("overlay");
+    const overlay = document.getElementById("overlay");
     overlay.classList.remove("active");
-    var iconQuestions = document.getElementsByClassName("icon-question");
+
+    const iconQuestions = document.getElementsByClassName("icon-question");
     Array.from(iconQuestions).forEach((q) => q.classList.remove("active"));
+
     const timetableContainers = document.querySelectorAll(
       ".timetable-container"
     );
-    document.getElementById("cbl-transformer").classList.remove("active");
-    document.getElementById("transformer").classList.remove("active");
-    document.getElementById("popup").classList.remove("active");
-    document.getElementById("cbl-popup").classList.remove("active");
+
+    const elementsToDeactivate = [
+      "cbl-transformer",
+      "transformer",
+      "popup",
+      "cbl-popup",
+      "popup-header",
+      "cbl-popup-header",
+    ];
+
+    elementsToDeactivate.forEach((id) => {
+      document.getElementById(id).classList.remove("active");
+    });
+
     document.getElementById("group-selector").style.display = "block";
     document.getElementById("cbl-group-selector").style.display = "block";
-    document.getElementById("popup-header").classList.remove("active");
-    document.getElementById("cbl-popup-header").classList.remove("active");
 
     timetableContainers.forEach((container) => {
       const children = container.children;
-
       if (window.innerWidth < 768) {
         // Hide the 2nd and 4th children
-        children[1].style.display = "none"; // 2nd child
-        children[3].style.display = "none"; // 4th child
+        if (children[1]) children[1].style.display = "none";
+        if (children[3]) children[3].style.display = "none";
       } else {
         // Show the 2nd and 4th children
-        children[1].style.display = "block"; // 2nd child
-        children[3].style.display = "block"; // 4th child
+        if (children[1]) children[1].style.display = "block";
+        if (children[3]) children[3].style.display = "block";
       }
     });
   }
   handleDateClickVisual(e) {
-    if (e.target.id === "previous") {
-      const prevBtn = document.getElementById("previous");
-      prevBtn.classList.add("clicked");
-      setTimeout(function () {
-        prevBtn.classList.remove("clicked");
-      }, 150);
-    }
-    if (e.target.id === "next") {
-      const nextBtn = document.getElementById("next");
-      nextBtn.classList.add("clicked");
-      setTimeout(function () {
-        nextBtn.classList.remove("clicked");
-      }, 100);
+    const buttonId = e.target.id;
+    if (buttonId === "previous" || buttonId === "next") {
+      const button = document.getElementById(buttonId);
+      button.classList.add("clicked");
+      setTimeout(
+        () => {
+          button.classList.remove("clicked");
+        },
+        buttonId === "previous" ? 150 : 100
+      );
     }
   }
   // add event listeners to dropdown menu
   addEventListeners() {
     function updateEventListeners() {
-      var groupContainer = document.getElementById("group-container");
+      const groupContainer = document.getElementById("group-container");
 
       if (window.innerWidth <= 768) {
-        groupContainer.addEventListener("click", handleClick);
+        if (!groupContainer.classList.contains("click-listener-added")) {
+          groupContainer.addEventListener("click", handleClick);
+          groupContainer.classList.add("click-listener-added");
+        }
       } else {
-        groupContainer.removeEventListener("click", handleClick);
+        if (groupContainer.classList.contains("click-listener-added")) {
+          groupContainer.removeEventListener("click", handleClick);
+          groupContainer.classList.remove("click-listener-added");
+        }
       }
     }
 
@@ -329,90 +274,125 @@ export default class View {
     window.addEventListener("resize", updateEventListeners);
 
     const selectGroup = this.selectGroup.bind(this);
-    document.getElementById("popup").addEventListener("click", function (e) {
-      // Get the selected option
-      var id = this.id;
-      var selectedOption = e.target.textContent;
-      // required formats for selected option
-      const format = /^[A-Z][0-9]{2}$/;
+
+    function handlePopupClick(
+      e,
+      id,
+      format,
+      overlayId,
+      transformerId,
+      popupId,
+      headerId
+    ) {
+      const selectedOption = e.target.textContent;
       if (format.test(selectedOption)) {
         selectGroup(selectedOption, id);
-        document.getElementById("overlay").classList.toggle("active");
-        document.getElementById("transformer").classList.toggle("active");
-        document.getElementById("popup").classList.toggle("active");
-        document.getElementById("popup-header").classList.toggle("active");
+        document.getElementById(overlayId).classList.toggle("active");
+        document.getElementById(transformerId).classList.toggle("active");
+        document.getElementById(popupId).classList.toggle("active");
+        document.getElementById(headerId).classList.toggle("active");
       }
+    }
+
+    document.getElementById("popup").addEventListener("click", function (e) {
+      handlePopupClick(
+        e,
+        "popup",
+        /^[A-Z][0-9]{2}$/,
+        "overlay",
+        "transformer",
+        "popup",
+        "popup-header"
+      );
     });
 
     document
       .getElementById("cbl-popup")
       .addEventListener("click", function (e) {
-        // Get the selected option
-        var id = this.id;
-        var selectedOption = e.target.textContent;
-        // required formats for selected option
-        const cblFormat = /^[A-Z]{3}[0-9]{2}$/;
-        if (cblFormat.test(selectedOption)) {
-          selectGroup(selectedOption, id);
-          document.getElementById("overlay").classList.toggle("active");
-          document.getElementById("cbl-transformer").classList.toggle("active");
-          document.getElementById("cbl-popup").classList.toggle("active");
-          document
-            .getElementById("cbl-popup-header")
-            .classList.toggle("active");
-        }
+        handlePopupClick(
+          e,
+          "cbl-popup",
+          /^[A-Z]{3}[0-9]{2}$/,
+          "overlay",
+          "cbl-transformer",
+          "cbl-popup",
+          "cbl-popup-header"
+        );
       });
-    document.getElementById("previous").addEventListener("click", () => {
-      changeDate("previous");
+
+    function handleDateChange(direction) {
+      changeDate(direction);
       this.updateTable();
-    });
-    document.getElementById("next").addEventListener("click", () => {
-      changeDate("next");
-      this.updateTable();
-    });
-    document.getElementById("date-selector").addEventListener("change", () => {
-      changeDate("textEntry");
-      this.updateTable();
-    });
+    }
+
+    document
+      .getElementById("previous")
+      .addEventListener("click", () => handleDateChange.call(this, "previous"));
+    document
+      .getElementById("next")
+      .addEventListener("click", () => handleDateChange.call(this, "next"));
+    document
+      .getElementById("date-selector")
+      .addEventListener("change", () =>
+        handleDateChange.call(this, "textEntry")
+      );
+
+    function handleGroupSelectorClick(
+      overlayId,
+      transformerId,
+      popupHeaderId,
+      groupSelectorId,
+      popupId
+    ) {
+      document.getElementById(overlayId).classList.toggle("active");
+      document.getElementById(transformerId).classList.toggle("active");
+      document.getElementById(popupHeaderId).classList.toggle("active");
+      document.getElementById(groupSelectorId).style.display = "none";
+      document.getElementById(popupId).classList.toggle("active");
+    }
+
     document
       .getElementById("group-selector")
-      .addEventListener("click", function () {
-        document.getElementById("overlay").classList.toggle("active");
-        document.getElementById("transformer").classList.toggle("active");
-        document.getElementById("popup-header").classList.toggle("active");
-        document.getElementById("group-selector").style.display = "none";
-        document.getElementById("popup").classList.toggle("active");
-      });
+      .addEventListener("click", () =>
+        handleGroupSelectorClick(
+          "overlay",
+          "transformer",
+          "popup-header",
+          "group-selector",
+          "popup"
+        )
+      );
+
     document
       .getElementById("cbl-group-selector")
-      .addEventListener("click", function () {
-        document.getElementById("overlay").classList.toggle("active");
-        document.getElementById("cbl-transformer").classList.toggle("active");
-        document.getElementById("cbl-popup-header").classList.toggle("active");
-        document.getElementById("cbl-group-selector").style.display = "none";
-        document.getElementById("cbl-popup").classList.toggle("active");
-      });
+      .addEventListener("click", () =>
+        handleGroupSelectorClick(
+          "overlay",
+          "cbl-transformer",
+          "cbl-popup-header",
+          "cbl-group-selector",
+          "cbl-popup"
+        )
+      );
     document.getElementById("date-buttons").addEventListener("click", (e) => {
       this.handleDateClickVisual(e);
     });
     document.addEventListener("DOMContentLoaded", function () {
-      const closeBtn = document.querySelector(".close");
-      const iconQuestion = document.querySelector(".q");
-      closeBtn.addEventListener("click", function () {
-        iconQuestion.classList.toggle("active");
-        document.getElementById("overlay").classList.toggle("active");
-      });
+      function handleCloseButtonClick(closeBtnSelector, iconQuestionSelector) {
+        const closeBtn = document.querySelector(closeBtnSelector);
+        const iconQuestion = document.querySelector(iconQuestionSelector);
+        closeBtn.addEventListener("click", function () {
+          iconQuestion.classList.toggle("active");
+          document.getElementById("overlay").classList.toggle("active");
+        });
+      }
+      handleCloseButtonClick(".close", ".q");
+      handleCloseButtonClick(".cbl-close", ".cbl-q");
     });
-    document.addEventListener("DOMContentLoaded", function () {
-      const closeBtn = document.querySelector(".cbl-close");
-      const iconQuestion = document.querySelector(".cbl-q");
-      closeBtn.addEventListener("click", function () {
-        iconQuestion.classList.toggle("active");
-        document.getElementById("overlay").classList.toggle("active");
-      });
+    window.addEventListener("resize", () => {
+      this.handleResize();
+      this.adjustImageOpacity();
     });
-    window.addEventListener("resize", this.handleResize);
-    window.addEventListener("resize", this.adjustImageOpacity);
   }
 }
 
