@@ -411,7 +411,7 @@ export default class View {
         document.getElementById("overlay").classList.toggle("active");
       });
     });
-    window.addEventListener("resize", this.handleResize);
+    // window.addEventListener("resize", this.handleResize);
     window.addEventListener("resize", this.adjustImageOpacity);
   }
 }
