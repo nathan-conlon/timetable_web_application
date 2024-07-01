@@ -193,7 +193,7 @@ function excelDateToReadable(excelDate) {
 
 // Main function to orchestrate the process
 async function getFormattedTimetable() {
-  const fileName = "Year1_FOCS_Timetable.xlsx";
+  const fileName = "Year1_FoCS_Timetable.xlsx";
   const filePath = fileName;
 
   try {
