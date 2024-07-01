@@ -111,10 +111,10 @@ export default class View {
     getTableHTML()
       .then((tableHTML) => {
         this.renderTable(tableHTML);
+        this.checkSchedule();
         this.renderViewDate(dateInfo.viewDate);
         this.applyColorCode();
         this.handleResize();
-        this.checkSchedule();
       })
       .catch((error) => {
         console.error("Error while getting table HTML:", error);
