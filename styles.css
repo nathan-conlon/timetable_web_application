@@ -50,11 +50,6 @@ body {
   margin: 0;
 }
 
-#schedule * {
-  color: #313639;
-  font-size: 16px;
-}
-
 /* date menu */
 
 #date-menu-container {
@@ -143,8 +138,8 @@ body {
   position: absolute;
   top: 0vh;
   left: calc(0vw - 0px);
-  transition: transform 0.3s ease-in-out, width 0.3s linear,
-    height 0.3s ease-in-out;
+  transition: transform 0.25s ease-in-out, width 0.25s ease-in-out,
+    height 0.25s ease-in-out;
 }
 
 #cbl-transformer {
@@ -157,7 +152,7 @@ body {
   margin-right: 0;
   z-index: 5;
   /* TRANSITIONS */
-  transform-origin: center;
+  transform-origin: 50% 100%;
   transform: translateY(calc(-257px + 50vh)) translateX(calc(42.5vw - 369px));
   /* centred */
   position: absolute;
@@ -288,7 +283,13 @@ body {
 }
 
 /* SCHEDULE*/
+#schedule * {
+  color: #313639;
+  font-size: 16px;
+}
+
 #keys {
+  font-size: 16px;
   color: #313639;
   display: flex;
   flex-direction: column;
@@ -316,15 +317,27 @@ body {
   box-sizing: border-box;
 }
 
-.timetable-container {
+.timetable-container,
+#nothing-today {
   opacity: 0; /* Initially hide the containers */
   transform: translateY(-20px); /* Move containers up */
   transition: opacity 0.5s ease, transform 0.5s ease; /* Add transition effect */
 }
 
-.timetable-container.show {
+.timetable-container.show,
+#nothing-today.active {
   opacity: 1; /* Show the containers */
   transform: translateY(0); /* Move containers to their original position */
+}
+
+#nothing-today {
+  width: 100vw;
+  opacity: 0;
+  text-align: center;
+  font-size: 28px;
+  position: fixed;
+  top: 50vh;
+  left: 0;
 }
 
 .timetable-item {
@@ -431,6 +444,7 @@ body {
     /* centred */
   }
   /* centred */
+  #keys,
   #schedule * {
     font-size: 13px; /* Adjust the value as needed */
   }
@@ -513,6 +527,7 @@ body {
   body {
     margin: 0;
   }
+  #keys,
   #schedule * {
     font-size: 2.8vw;
   }

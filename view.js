@@ -114,10 +114,21 @@ export default class View {
         this.renderViewDate(dateInfo.viewDate);
         this.applyColorCode();
         this.handleResize();
+        this.checkSchedule();
       })
       .catch((error) => {
         console.error("Error while getting table HTML:", error);
       });
+  }
+
+  checkSchedule() {
+    const scheduleDiv = document.getElementById("schedule");
+    const nothingToday = document.getElementById("nothing-today");
+    if (scheduleDiv.innerHTML.trim() === "") {
+      nothingToday.classList.add("active");
+    }
+    if (scheduleDiv.innerHTML.trim() !== "")
+      nothingToday.classList.remove("active");
   }
 
   applyColorCode() {
@@ -147,7 +158,7 @@ export default class View {
   adjustImageOpacity() {
     const image = document.getElementById("logo");
     const maxViewportWidth = window.innerWidth; // Get the current viewport width
-    const minViewportWidth = 700; // Define the minimum viewport width for opacity scaling
+    const minViewportWidth = 769; // Define the minimum viewport width for opacity scaling
 
     if (maxViewportWidth > minViewportWidth) {
       const newOpacity =
