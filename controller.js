@@ -27,6 +27,7 @@ async function getTableHTML() {
 }
 getTableHTML().then((tableHTML) => {
   view.renderTable(tableHTML);
+  view.checkSchedule();
   view.renderViewDate(dateInfo.currentDate);
   view.handleResize();
 });

@@ -193,7 +193,7 @@ function excelDateToReadable(excelDate) {
 
 // Main function to orchestrate the process
 async function getFormattedTimetable() {
-  const fileName = "Year1_FOCS_Timetable.xlsx";
+  const fileName = "Year1_FoCS_Timetable.xlsx";
   const filePath = fileName;
 
   try {
@@ -215,6 +215,7 @@ async function getFormattedTimetable() {
       }
     });
     // Logic for formatting groups into an array
+    if (entry.Group.includes("ALL")) entry.Group = entry.Group.trim();
     if (entry.Group.includes("-")) {
       // Split the groups into string iterations
       let string = entry.Group.split("-");
