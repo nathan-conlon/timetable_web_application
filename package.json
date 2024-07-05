@@ -1,24 +1,25 @@
 {
-  "name": "timetable-app",
+  "name": "timetable_web_application-master",
   "version": "1.0.0",
   "description": "Timetable application to be used in conjunction with the years 1 and 2 Medicine timetables.",
-  "main": "generateTableContent.js",
+  "main": "checkLastUpdate.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "fs": "^0.0.1-security",
-    "puppeteer": "^22.9.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nathan-conlon/timetable_web_application.git"
   },
-  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/nathan-conlon/timetable_web_application/issues"
   },
-  "homepage": "https://github.com/nathan-conlon/timetable_web_application#readme"
+  "homepage": "https://github.com/nathan-conlon/timetable_web_application#readme",
+  "devDependencies": {
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "puppeteer": "^22.12.1"
+  }
 }
