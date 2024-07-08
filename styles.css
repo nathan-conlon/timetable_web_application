@@ -179,6 +179,7 @@ body {
 
 #popup-header,
 #cbl-popup-header {
+  white-space: nowrap;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -336,7 +337,7 @@ body {
   text-align: center;
   font-size: 28px;
   position: fixed;
-  top: 50vh;
+  top: calc(300px + 15vh);
   left: 0;
 }
 
