@@ -215,7 +215,7 @@
             "signal_threshold": 0.5
          }
       }, {
-         "approved_channels": [ "canary", "dev" ],
+         "approved_channels": [ "canary", "dev", "beta", "stable" ],
          "enabled": false,
          "enabled|flight:msEnhancedWindowsSearch": true,
          "footer": {
@@ -251,10 +251,6 @@
          },
          "settings_description": "We'll automatically open the Search pane to show you relevant content while you search",
          "settings_title": "Automatically open Search",
-         "triggering_configs|flight:msShorelinePersistentSearch": [ {
-            "signal_name": "IsBingPersistentSearchQuery",
-            "signal_threshold": 0.5
-         } ],
          "triggering_configs|locale:zh_CN|flight:msUpsellBingAtSidebar": [ {
             "signal_name": "IsAutoOpenSidebarSearchQuery",
             "signal_threshold": 0.5
@@ -267,9 +263,9 @@
       "description": "Search without losing your place",
       "icon": {
          "raster_icon": {
-            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_search_maximal_dark.png/1.3.18/asset",
-            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_search_hc.png/1.3.18/asset",
-            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_search_maximal_light.png/1.3.18/asset"
+            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_search_maximal_dark.png/1.3.19/asset",
+            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_search_hc.png/1.3.19/asset",
+            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_search_maximal_light.png/1.3.19/asset"
          }
       },
       "id": "8ac719c5-140b-4bf2-a0b7-c71617f1f377",
@@ -289,7 +285,7 @@
       "target": {
          "command": "search"
       },
-      "version": "1.3.18"
+      "version": "1.3.19"
    }, {
       "capabilities": {
          "deprecated_hide_header": true
@@ -2142,7 +2138,7 @@
          "lifetime": "tab",
          "lifetime|flight:msHubAppMsStartPerWindowAutoOpen": "window",
          "min_page_width_pixels": 1052,
-         "non_visible_user_friendly_name": "Yahoo Naver Top Site",
+         "non_visible_user_friendly_name": "Yahoo Naver News",
          "remember_context": {
             "time_to_live_sec": 86400
          },
@@ -2155,8 +2151,7 @@
             "hubappparams|flight:msHubAppMsStartYJDense": "experiences=ShorelineArticleFeed&ocid=stpromoshoreline",
             "hubappsubpath": "/ja-jp/feed",
             "hubappsubpath|flight:msHubAppMsStartYJDense": "/widgets/fullpage/sharedWidgets/shorelinearticle",
-            "signal_name": "IsYahooJapanTopSites",
-            "signal_name|flight:msHubAppMsStartYJTopNews": "IsYahooJapanNews",
+            "signal_name": "IsYahooJapanNews",
             "signal_threshold": 0.5
          },
          "triggering_config|locale:ko": {
@@ -2164,8 +2159,7 @@
             "hubappparams|flight:msHubAppMsStartYJDense": "experiences=ShorelineArticleFeed&ocid=stpromoshoreline",
             "hubappsubpath": "/ko-kr/feed",
             "hubappsubpath|flight:msHubAppMsStartYJDense": "/widgets/fullpage/sharedWidgets/shorelinearticle",
-            "signal_name": "IsNaverTopSite",
-            "signal_name|flight:msHubAppMsStartYJTopNews": "IsNaverNews",
+            "signal_name": "IsNaverNews",
             "signal_threshold": 0.5
          },
          "triggering_config|locale:zh_TW": {
@@ -2173,8 +2167,7 @@
             "hubappparams|flight:msHubAppMsStartYJDense": "experiences=ShorelineArticleFeed&ocid=stpromoshoreline",
             "hubappsubpath": "/zh-tw/feed",
             "hubappsubpath|flight:msHubAppMsStartYJDense": "/widgets/fullpage/sharedWidgets/shorelinearticle",
-            "signal_name": "IsYahooTaiwanTopSite",
-            "signal_name|flight:msHubAppMsStartYJTopNews": "IsYahooTaiwanNews",
+            "signal_name": "IsYahooTaiwanNews",
             "signal_threshold": 0.5
          }
       }, {
@@ -2208,8 +2201,7 @@
          }
       } ],
       "auto_show": {
-         "enabled": true,
-         "enabled|flight:msHubAppMsStartAutoOpenV2": false,
+         "enabled": false,
          "fre_notification": {
             "enabled": true,
             "header": "We opened the news feed in this sidebar so you can continue browsing.",
@@ -2233,8 +2225,8 @@
       "flights": [ "msEdgeHubAppStart", "msEdgeTransientAppAutoOpen" ],
       "icon": {
          "raster_icon": {
-            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_msstart_logo_dark.png/1.2.14/asset",
-            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_msstart_logo_light.png/1.2.14/asset"
+            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_msstart_logo_dark.png/1.2.15/asset",
+            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_msstart_logo_light.png/1.2.15/asset"
          }
       },
       "id": "b7a8e9f2-6b0d-4c5b-ae7d-8a6e1f2c7a6f",
@@ -2250,7 +2242,7 @@
          "url": "https://www.msn.com/widgets/fullpage/winWidgets/sidebar?experiences=WindowsWidgetsHub",
          "url|market:CN": "https://www.msn.cn/widgets/fullpage/winWidgets/sidebar?experiences=WindowsWidgetsHub"
       },
-      "version": "1.2.14"
+      "version": "1.2.15"
    }, {
       "capabilities": {
          "hide_navigation_buttons": true
